@@ -3,330 +3,445 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ACSI-28 — Inventário de Enfrentamento</title>
+<title>Baú de Ferramentas — Eryca Bastos</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#F8F4EC;min-height:100vh}
 :root{--cr:#F8F4EC;--cr2:#EEE8DA;--vd:#304E38;--sg:#8CA591;--do:#C0A258}
-.screen{max-width:560px;margin:0 auto;padding:1.5rem 1rem}
-.header{background:var(--vd);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
-.header .sub{color:var(--do);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.header h1{color:#F8F4EC;font-size:20px;font-weight:500;margin-top:4px}
-.header p{color:#8CA591;font-size:12px;margin-top:6px;line-height:1.5}
-.back{background:none;border:none;color:#8CA591;font-size:13px;cursor:pointer;margin:1rem 0 0 1rem;display:block}
-input[type=text]{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--cr2);font-size:15px;background:var(--cr);font-family:inherit;margin-bottom:1.25rem}
-label.fl{font-size:13px;color:#666;display:block;margin-bottom:6px}
 
-/* progresso */
-.prog-bar{height:5px;background:var(--cr2);border-radius:3px;margin-bottom:1.25rem;overflow:hidden}
-.prog-fill{height:100%;background:var(--vd);border-radius:3px;transition:width .3s}
-.prog-label{font-size:11px;color:#999;text-align:right;margin-bottom:6px}
+/* home */
+.home{max-width:600px;margin:0 auto;padding:2rem 1rem}
+.hero{background:var(--vd);border-radius:16px;padding:2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero::after{content:"PSI";position:absolute;right:-10px;bottom:-20px;font-size:100px;font-weight:900;color:#ffffff08;line-height:1}
+.hero .eyebrow{color:var(--do);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.hero h1{color:var(--cr);font-size:26px;font-weight:500;margin:6px 0 4px}
+.hero p{color:#8CA591;font-size:13px}
 
-/* questão */
-.qcard{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
-.qnum{font-size:11px;color:var(--do);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.qtext{font-size:14px;font-weight:500;color:var(--vd);margin-bottom:14px;line-height:1.5}
-.scale-row{display:flex;gap:6px}
-.scale-btn{flex:1;padding:10px 0;border-radius:8px;border:1px solid var(--cr2);background:#fff;color:var(--vd);font-size:14px;font-weight:500;cursor:pointer;text-align:center}
-.scale-btn.on{background:var(--vd);color:#F8F4EC;border-color:var(--vd)}
-.scale-labels{display:flex;justify-content:space-between;margin-top:6px}
-.scale-labels span{font-size:10px;color:#999}
+.section-label{font-size:11px;font-weight:600;color:var(--sg);letter-spacing:1px;text-transform:uppercase;margin:1.5rem 0 .75rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:.5rem}
+.card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1rem;cursor:pointer;transition:box-shadow .15s}
+.card:active{background:var(--cr)}
+.card .icon{font-size:22px;margin-bottom:8px}
+.card .ctitle{font-size:14px;font-weight:500;color:var(--vd);margin-bottom:3px}
+.card .cdesc{font-size:12px;color:#999;line-height:1.4}
+.card.destaque{background:var(--vd);border-color:var(--vd)}
+.card.destaque .ctitle{color:var(--cr)}
+.card.destaque .cdesc{color:var(--sg)}
 
-/* navegação */
-.nav-row{display:flex;gap:10px;margin-top:1rem}
-.btn-p{flex:1;padding:13px;background:var(--vd);color:#F8F4EC;border:none;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer}
-.btn-s{padding:13px 20px;border-radius:10px;border:1px solid var(--cr2);background:var(--cr);color:var(--vd);font-size:15px;cursor:pointer}
-.err{color:#c0392b;font-size:13px;margin-top:8px}
+/* tela interna */
+.tela{max-width:560px;margin:0 auto;padding:1.5rem 1rem}
+.back{background:none;border:none;color:var(--sg);font-size:13px;cursor:pointer;margin:1rem 0 0 1rem;display:block}
+.tela-header{background:var(--vd);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.tela-header .sub{color:var(--do);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.tela-header h2{color:var(--cr);font-size:20px;font-weight:500;margin-top:4px}
 
-/* resultado */
-.result-header{background:var(--vd);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;text-align:center}
-.result-header .nome{color:var(--do);font-size:13px;font-weight:500}
-.result-header .total{color:#F8F4EC;font-size:42px;font-weight:300;margin:8px 0 4px}
-.result-header .nivel{color:#8CA591;font-size:13px}
-.result-header .nivel span{color:#F8F4EC;font-weight:600}
+/* respiração */
+.resp-circle{width:180px;height:180px;border-radius:50%;background:var(--vd);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1.5rem auto;transition:transform 1s ease-in-out;box-shadow:0 0 0 0 #304E3840}
+.resp-circle .phase{color:var(--do);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.resp-circle .count{color:var(--cr);font-size:48px;font-weight:300;line-height:1}
+.resp-instrucao{text-align:center;font-size:14px;color:#666;margin-bottom:1.5rem;min-height:40px}
+.btn-p{width:100%;padding:14px;background:var(--vd);color:var(--cr);border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer}
+.btn-s{padding:10px 20px;border-radius:8px;border:1px solid var(--cr2);background:var(--cr);color:var(--vd);font-size:14px;cursor:pointer}
+.cycles-row{display:flex;justify-content:center;gap:8px;margin-bottom:1.5rem}
+.cycle-dot{width:10px;height:10px;border-radius:50%;background:var(--cr2)}
+.cycle-dot.done{background:var(--vd)}
 
-.radar-wrap{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1rem;margin-bottom:1.25rem}
-canvas{display:block;margin:0 auto}
+/* grounding */
+.grounding-step{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:12px;display:none}
+.grounding-step.active{display:block}
+.grounding-step .num{font-size:32px;font-weight:700;color:var(--do);line-height:1}
+.grounding-step .sense{font-size:16px;font-weight:500;color:var(--vd);margin:4px 0 8px}
+.grounding-step .instruction{font-size:14px;color:#555;line-height:1.6}
+.grounding-step .input-area{width:100%;margin-top:12px;padding:10px;border-radius:8px;border:1px solid var(--cr2);font-size:14px;font-family:inherit;resize:none;background:var(--cr)}
+.progress-bar{height:6px;background:var(--cr2);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:var(--vd);border-radius:3px;transition:width .3s}
 
-.sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
-.sub-card{background:#fff;border:1px solid var(--cr2);border-radius:10px;padding:.75rem}
-.sub-card .slabel{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.sub-card .sval{font-size:20px;font-weight:600;color:var(--vd)}
-.sub-card .sbar{height:5px;background:var(--cr2);border-radius:3px;margin-top:6px;overflow:hidden}
-.sub-card .sbfill{height:100%;border-radius:3px}
+/* psicoeducação */
+.psico-card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:12px}
+.psico-card h3{font-size:15px;font-weight:500;color:var(--vd);margin-bottom:8px}
+.psico-card p{font-size:13px;color:#555;line-height:1.7;margin-bottom:8px}
+.psico-card .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--cr2);color:var(--vd);margin-bottom:8px}
+.psico-card ul{padding-left:1.2rem;font-size:13px;color:#555;line-height:1.8}
+.btn-print{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--cr2);background:var(--cr);color:var(--vd);font-size:13px;cursor:pointer;margin-top:8px}
 
-.interp{background:var(--cr);border:1px solid var(--cr2);border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:13px;color:#555;line-height:1.6}
-.interp strong{color:var(--vd)}
-.btn-print{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;border-radius:10px;border:1px solid var(--cr2);background:#fff;color:var(--vd);font-size:14px;cursor:pointer;margin-bottom:10px}
-.btn-novo{width:100%;padding:12px;background:var(--vd);color:#F8F4EC;border:none;border-radius:10px;font-size:14px;cursor:pointer}
+/* check-in link */
+.link-card{background:var(--vd);border-radius:12px;padding:1.5rem;margin-bottom:12px;text-align:center}
+.link-card p{color:var(--sg);font-size:13px;margin-bottom:12px}
+.link-card a{display:block;background:var(--do);color:var(--vd);padding:12px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none}
 
-@media print{.back,.btn-print,.btn-novo,.nav-row{display:none}}
+@media print{.back,.btn-print{display:none}}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-const ITEMS = [
-  "1) Diariamente ou semanalmente eu estabeleço metas muito específicas que me guiam no que fazer.",
-  "2) Eu tiro o maior proveito dos meus talentos e habilidades.",
-  "3) Quando o treinador ou técnico me diz como corrigir um erro que eu tenha cometido eu tenho tendência a ficar aborrecido/incomodado.",
-  "4) Quando estou praticando esporte, eu consigo focar minha atenção e bloquear distrações.",
-  "5) Eu permaneço positivo e entusiasmado durante a competição, não importa como a situação esteja.",
-  "6) Minha tendência é competir melhor sob pressão, pois eu penso mais claramente.",
-  "7) Eu me preocupo um pouco sobre o que as pessoas pensam sobre meu desempenho.",
-  "8) Tenho tendência a fazer muitos planos sobre como atingir minhas metas.",
-  "9) Eu sinto confiança de que irei competir bem.",
-  "10) Quando um técnico ou treinador me critica, eu fico aborrecido/incomodado ao invés de me sentir ajudado.",
-  "11) É fácil me manter concentrado em uma tarefa mesmo quando estou assistindo ou ouvindo algo.",
-  "12) Eu me pressiono muito ao me preocupar como será meu desempenho.",
-  "13) Eu estabeleço minhas próprias metas de desempenho para cada prática.",
-  "14) Eu não necessito que me recomendem a praticar ou competir duro. Eu dou 100%.",
-  "15) Se um técnico me criticar ou gritar comigo, eu corrijo o erro sem ficar aborrecido/incomodado com isso.",
-  "16) Eu lido com situações inesperadas no meu esporte muito bem.",
-  "17) Quando as coisas estão ruins, eu digo a mim mesmo para ficar calmo e isso funciona pra mim.",
-  "18) Quanto mais pressão houver na competição, mais eu gosto.",
-  "19) Durante as competições eu me preocupo se vou cometer erros ou não vou conseguir ir até o fim.",
-  "20) Eu tenho meu plano de competição completamente estruturado na minha mente muito antes de começar.",
-  "21) Quando eu sinto que estou ficando muito tenso, eu posso rapidamente relaxar meu corpo e me acalmar.",
-  "22) Para mim, situações sobre pressão são desafios que eu recebo bem.",
-  "23) Eu penso e imagino sobre o que irá acontecer se eu falhar ou estragar tudo.",
-  "24) Eu mantenho o controle emocional, não importa como as coisas estão indo comigo.",
-  "25) Para mim, é fácil direcionar minha atenção e focar em um único objeto ou pessoa.",
-  "26) Quando falho em minhas metas, isso me faz tentar ainda mais.",
-  "27) Eu aperfeiçoo minhas habilidades escutando cuidadosamente aos conselhos e instruções dos técnicos e treinadores.",
-  "28) Eu cometo menos erros quando estou sob pressão porque me concentro melhor."
+const CHECKIN_URL = "https://erycaabastos-creator.github.io/checkin---prejogo/";
+
+let view = "home";
+let respAtivo = false, respFase = 0, respContador = 0, respCiclo = 0, respTimer = null;
+let groundStep = 0, groundRespostas = ["","","","",""];
+let psicoAtual = null;
+
+const PSICOEDUCACOES = [
+  {
+    id:"ansiedade",
+    titulo:"Ansiedade pré-competitiva",
+    tag:"Regulação emocional",
+    resumo:"A ansiedade antes da competição é normal e pode ser aliada — o que importa é como o atleta a interpreta.",
+    conteudo:`A ansiedade pré-competitiva é uma resposta natural do organismo diante de situações desafiadoras. Ela ativa o sistema nervoso simpático, preparando o corpo para a ação: coração acelerado, músculos tensos, atenção aguçada.
+
+O problema não é sentir ansiedade — é interpretá-la como sinal de perigo. Atletas que reinterpretam essa ativação como "energia para competir" tendem a ter desempenho superior.`,
+    pontos:[
+      "Ansiedade somática: sintomas físicos (coração acelerado, tensão muscular)",
+      "Ansiedade cognitiva: pensamentos negativos e preocupações",
+      "Nível ótimo de ativação varia de atleta para atleta",
+      "Técnicas de respiração e grounding ajudam a regular a intensidade"
+    ]
+  },
+  {
+    id:"foco",
+    titulo:"Foco e atenção na competição",
+    tag:"Desempenho",
+    resumo:"O foco é uma habilidade treinável. Saber onde colocar a atenção no momento certo é diferencial competitivo.",
+    conteudo:`A atenção pode ser direcionada para dentro (pensamentos, sensações) ou para fora (ambiente, adversário). Na competição, o atleta precisa alternar entre esses focos com flexibilidade.
+
+Distrações são inevitáveis — o treino de foco ensina o atleta a perceber quando saiu do ponto ótimo de atenção e a retornar rapidamente, sem se punir.`,
+    pontos:[
+      "Foco interno amplo: análise tática do jogo",
+      "Foco interno estreito: controle da respiração e sensações",
+      "Foco externo amplo: leitura do ambiente e adversários",
+      "Foco externo estreito: bola, gol, alvo",
+      "Rotinas pré-performance ajudam a 'ligar' o foco"
+    ]
+  },
+  {
+    id:"confianca",
+    titulo:"Confiança esportiva",
+    tag:"Mentalidade",
+    resumo:"A confiança não vem do sucesso — vem da relação que o atleta tem com seus próprios recursos.",
+    conteudo:`A confiança esportiva é a crença do atleta na sua capacidade de executar as habilidades necessárias para o sucesso. Ela não é fixa — flutua de acordo com experiências, pensamentos e ambiente.
+
+Atletas com alta autoeficácia persistem diante de dificuldades, se recuperam mais rápido de erros e se comprometem mais com o treino.`,
+    pontos:[
+      "Fontes de confiança: domínio (execução bem-feita), experiência vicária (ver outros), persuasão social (encorajamento)",
+      "Diálogo interno positivo fortalece a confiança",
+      "Erros não destroem confiança — a interpretação do erro sim",
+      "Ritual pré-jogo consolida a sensação de preparo"
+    ]
+  },
+  {
+    id:"rotina",
+    titulo:"Rotina pré-jogo",
+    tag:"Preparação",
+    resumo:"Uma rotina consistente antes da competição cria um estado mental previsível e favorável ao desempenho.",
+    conteudo:`A rotina pré-competitiva é uma sequência de comportamentos físicos e mentais que o atleta realiza antes de competir. Ela funciona como um "gatilho" para o estado ideal de desempenho.
+
+Não precisa ser longa — pode ter 15 a 30 minutos. O que importa é a consistência e o significado que o atleta atribui a cada etapa.`,
+    pontos:[
+      "Inclui componentes físicos: aquecimento, alimentação, sono",
+      "Inclui componentes mentais: visualização, música, respiração",
+      "Deve ser personalizada — o que funciona para um pode não funcionar para outro",
+      "Treinar a rotina em situações de baixa pressão para automatizar"
+    ]
+  },
+  {
+    id:"erro",
+    titulo:"Gestão do erro",
+    tag:"Resiliência",
+    resumo:"Como o atleta reage ao erro dentro da competição define muito mais o resultado do que o erro em si.",
+    conteudo:`Errar é parte inevitável do esporte. O que diferencia atletas de alto rendimento não é a ausência de erros — é a velocidade e qualidade da recuperação após eles.
+
+Atletas que se punem excessivamente ficam presos no erro passado e perdem o foco no momento presente. O objetivo é desenvolver uma relação funcional com o erro: reconhecer, ajustar e seguir.`,
+    pontos:[
+      "Evitar ruminação: reconheça o erro em no máximo 3 segundos",
+      "Gesto de reset: um movimento físico para 'fechar' o erro (ex: bater as mãos)",
+      "Foco no próximo ponto, não no erro anterior",
+      "Autocompaixão esportiva: tratar-se como trataria um colega de equipe"
+    ]
+  }
 ];
 
-// Subescalas: [nome, itens (1-based), itens_invertidos (1-based)]
-const SUBSCALAS = [
-  { nome:"Desempenho sob Pressão", itens:[6,18,22,28], inv:[] },
-  { nome:"Lidar com Adversidades", itens:[5,17,21,24], inv:[] },
-  { nome:"Metas/Preparação Mental", itens:[1,8,13,20],  inv:[] },
-  { nome:"Livre de Preocupação",    itens:[7,12,19,23], inv:[7,12,19,23] },
-  { nome:"Concentração",            itens:[4,11,25,28], inv:[] },
-  { nome:"Treinabilidade",          itens:[3,10,15,27], inv:[3,10] },
-  { nome:"Motivação e Confiança",   itens:[2,9,14,26],  inv:[] },
-];
+function render(){ document.getElementById("app").innerHTML = html(); bind(); }
 
-const CORES = ["#304E38","#C0A258","#8CA591","#5d8a6e","#a07c3e","#4a7a5e","#b08040"];
-
-// estado
-let view = "intro"; // intro | quiz | result
-let nomeAtleta = "", catAtleta = "";
-let respostas = new Array(28).fill(null);
-let questaoAtual = 0;
-let errMsg = "";
-
-function calcular() {
-  const scores = SUBSCALAS.map(sub => {
-    const soma = sub.itens.reduce((acc, i) => {
-      const r = respostas[i-1];
-      const val = sub.inv.includes(i) ? 3 - r : r;
-      return acc + val;
-    }, 0);
-    const pct = Math.round((soma / 12) * 100);
-    return { nome: sub.nome, soma, pct };
-  });
-  const totalSoma = scores.reduce((a,s) => a+s.soma, 0);
-  const totalPct = Math.round((totalSoma / 84) * 100);
-  const nivel = totalPct >= 75 ? "Alto" : totalPct >= 50 ? "Médio" : "Baixo";
-  return { scores, totalSoma, totalPct, nivel };
-}
-
-function render() { document.getElementById("app").innerHTML = html(); bind(); if(view==="result") drawRadar(); }
-
-function html() {
-  if(view==="intro")  return htmlIntro();
-  if(view==="quiz")   return htmlQuiz();
-  if(view==="result") return htmlResult();
+function html(){
+  if(view==="home")     return htmlHome();
+  if(view==="checkin")  return htmlCheckin();
+  if(view==="acsi")     return htmlAcsiFrame();
+  if(view==="resp")     return htmlResp();
+  if(view==="ground")   return htmlGround();
+  if(view==="psico")    return htmlPsicoLista();
+  if(view==="psico-item") return htmlPsicoItem();
   return "";
 }
 
-function htmlIntro() {
-  return `<div class="screen">
-    <div class="header">
-      <p class="sub">Avaliação Psicológica</p>
-      <h1>ACSI-28 — Inventário de Enfrentamento para Atletas</h1>
-      <p>Os itens abaixo descrevem suas experiências de enfrentamento. Leia cada frase cuidadosamente e responda com que frequência você experimenta a mesma coisa. Não há resposta certa ou errada.</p>
+function htmlHome(){
+  return `<div class="home">
+    <div class="hero">
+      <p class="eyebrow">Psicologia do Esporte</p>
+      <h1>Baú de Ferramentas</h1>
+      <p>Eryca Bastos · Psicologia do Esporte · Sub-15, Sub-17, Sub-20</p>
     </div>
-    <div style="background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem">
-      <p style="font-size:13px;color:var(--vd);font-weight:500;margin-bottom:12px">Escala de resposta:</p>
-      ${[["0","Quase nunca"],["1","Às vezes"],["2","Frequentemente"],["3","Quase sempre"]].map(([n,l])=>`
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <div style="width:28px;height:28px;border-radius:6px;background:var(--vd);color:#F8F4EC;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0">${n}</div>
-          <span style="font-size:13px;color:#555">${l}</span>
+
+    <p class="section-label">Check-in</p>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="card destaque" data-view="checkin">
+        <div class="icon">📋</div>
+        <div class="ctitle">Check-in Pré-Jogo</div>
+        <div class="cdesc">Formulário para atletas + painel de resultados em tempo real</div>
+      </div>
+    </div>
+
+    <p class="section-label">Avaliação Psicológica</p>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="card destaque" data-view="acsi">
+        <div class="icon">📊</div>
+        <div class="ctitle">ACSI-28 — Inventário de Enfrentamento</div>
+        <div class="cdesc">Avalia 7 habilidades psicológicas de coping. Correção automática com gráfico radar e comparativo longitudinal.</div>
+      </div>
+    </div>
+
+    <p class="section-label">Regulação Emocional</p>
+    <div class="grid">
+      <div class="card" data-view="resp">
+        <div class="icon">🫁</div>
+        <div class="ctitle">Respiração Diafragmática</div>
+        <div class="cdesc">Guia animado com ciclos de respiração</div>
+      </div>
+      <div class="card" data-view="ground">
+        <div class="icon">🌱</div>
+        <div class="ctitle">Grounding 5-4-3-2-1</div>
+        <div class="cdesc">Técnica de ancoragem sensorial passo a passo</div>
+      </div>
+    </div>
+
+    <p class="section-label">Avaliação Psicológica</p>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="card" data-view="acsi">
+        <div class="icon">📊</div>
+        <div class="ctitle">ACSI-28 — Inventário de Enfrentamento</div>
+        <div class="cdesc">Avalia 7 habilidades psicológicas de coping. Correção automática com gráfico radar e PDF.</div>
+      </div>
+    </div>
+
+    <p class="section-label">Psicoeducação</p>
+    <div class="grid">
+      ${PSICOEDUCACOES.map(p=>`
+        <div class="card" data-view="psico-item" data-id="${p.id}">
+          <div class="icon">${p.id==="ansiedade"?"😰":p.id==="foco"?"🎯":p.id==="confianca"?"💪":p.id==="rotina"?"🔄":"⚡"}</div>
+          <div class="ctitle">${p.titulo}</div>
+          <div class="cdesc">${p.resumo}</div>
         </div>`).join("")}
     </div>
-    <label class="fl">Nome completo do atleta</label>
-    <input type="text" id="inp-nome" value="${nomeAtleta}" placeholder="Digite o nome..."/>
-    <label class="fl">Categoria</label>
-    <input type="text" id="inp-cat" value="${catAtleta}" placeholder="Ex: Sub-17"/>
-    ${errMsg?`<p class="err">${errMsg}</p>`:""}
-    <button class="btn-p" id="btn-iniciar">Iniciar avaliação →</button>
   </div>`;
 }
 
-function htmlQuiz() {
-  const prog = ((questaoAtual+1)/28)*100;
-  const r = respostas[questaoAtual];
+function htmlAcsiFrame(){
   return `<button class="back" id="btn-back">← Voltar</button>
-  <div class="screen">
-    <p class="prog-label">Questão ${questaoAtual+1} de 28</p>
-    <div class="prog-bar"><div class="prog-fill" style="width:${prog}%"></div></div>
-    <div class="qcard">
-      <p class="qnum">Item ${questaoAtual+1}</p>
-      <p class="qtext">${ITEMS[questaoAtual].replace(/^\d+\) /,"")}</p>
-      <div class="scale-row">
-        ${[0,1,2,3].map(n=>`<button class="scale-btn ${r===n?"on":""}" data-v="${n}">${n}</button>`).join("")}
-      </div>
-      <div class="scale-labels"><span>Quase nunca</span><span>Quase sempre</span></div>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Avaliação Psicológica</p><h2>ACSI-28</h2></div>
+    <div class="link-card">
+      <p>Aplicar o inventário completo com correção automática e gráfico radar</p>
+      <a href="https://erycaabastos-creator.github.io/acsi28/" target="_blank">Abrir ACSI-28 →</a>
     </div>
-    ${errMsg?`<p class="err">${errMsg}</p>`:""}
-    <div class="nav-row">
-      ${questaoAtual>0?`<button class="btn-s" id="btn-prev">← Anterior</button>`:""}
-      <button class="btn-p" id="btn-next">${questaoAtual<27?"Próximo →":"Ver resultado"}</button>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">
+      💡 <strong style="color:var(--vd)">Como usar:</strong> Abra o link com o atleta, aplique as 28 questões, o resultado sai automaticamente com gráfico radar e interpretação. Você pode imprimir ou salvar como PDF para compartilhar com o treinador.
     </div>
   </div>`;
 }
 
-function htmlResult() {
-  const {scores, totalPct, nivel} = calcular();
-  const hoje = new Date().toLocaleDateString("pt-BR");
-  const nivelCor = nivel==="Alto"?"#27ae60":nivel==="Médio"?"#C0A258":"#c0392b";
-  const interps = {
-    "Desempenho sob Pressão":"Avalia o quanto o atleta tende a se sentir mais desafiado do que ameaçado nas situações de pressão competitiva, atingindo bons níveis de rendimento sob pressão.",
-    "Lidar com Adversidades":"Avalia o quanto o atleta tende a se manter positivo, calmo e entusiasmado, mesmo quando as coisas correm mal, recuperando-se rapidamente dos erros.",
-    "Metas/Preparação Mental":"Avalia o quanto o atleta trabalha guiado por metas específicas de desempenho, construindo e executando planos de ação e se preparando mentalmente para a competição.",
-    "Livre de Preocupação":"Avalia o quanto o atleta tende a não alimentar preocupações desnecessárias em relação ao desempenho, focando no que quer que aconteça.",
-    "Concentração":"Avalia o quanto o atleta tende a se manter focado na tarefa, bloqueando distrações internas e externas.",
-    "Treinabilidade":"Avalia a abertura e acessibilidade do atleta ao aprendizado, lidando bem com a crítica construtiva e seguindo instruções com facilidade.",
-    "Motivação e Confiança":"Avalia o quanto o atleta tende a confiar em suas capacidades, manter-se positivo em relação ao seu rendimento e perseverar frente a situações negativas.",
-  };
+function htmlAcsi(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Avaliação Psicológica</p><h2>ACSI-28</h2></div>
+    <div class="link-card">
+      <p>Aplicar o inventário com o atleta</p>
+      <a href="https://erycaabastos-creator.github.io/acsi-28/" target="_blank">Abrir formulário para atleta →</a>
+    </div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)">
+      <p style="color:#666">Acessar painel de resultados e comparativos</p>
+      <a href="https://erycaabastos-creator.github.io/acsi-28/" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir painel (senha) →</a>
+    </div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">
+      💡 <strong style="color:var(--vd)">Como usar:</strong> Envie o link para o atleta preencher. O atleta vê apenas "Avaliação concluída". Você acessa o resultado, gráfico radar e comparativo longitudinal pelo painel com senha.
+    </div>
+  </div>`;
+}
 
-  return `<button class="back" id="btn-back">← Nova avaliação</button>
-  <div class="screen" id="resultado-print">
+function htmlCheckin(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Check-in Pré-Jogo</p><h2>Acesso Rápido</h2></div>
+    <div class="link-card">
+      <p>Link do formulário para os atletas</p>
+      <a href="${CHECKIN_URL}" target="_blank">Abrir Check-in →</a>
+    </div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)">
+      <p style="color:#666">Acesse o painel de resultados no mesmo link</p>
+      <a href="${CHECKIN_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir Painel →</a>
+    </div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">
+      💡 <strong style="color:var(--vd)">Dica:</strong> Envie o link pelo WhatsApp da categoria entre 18h e 20h do dia anterior ao jogo. A senha do painel é apenas sua.
+    </div>
+  </div>`;
+}
 
-    <div class="result-header">
-      <p class="nome">${nomeAtleta} · ${catAtleta}</p>
-      <p style="color:#8CA591;font-size:11px;margin-top:2px">Data da avaliação: ${hoje}</p>
-      <p class="total">${totalPct}%</p>
-      <p class="nivel">Recursos Totais de Coping — <span style="color:${nivelCor}">${nivel}</span></p>
+function htmlResp(){
+  const fases = [
+    {nome:"INSPIRE",dur:4,instrucao:"Inspire lentamente pelo nariz..."},
+    {nome:"SEGURE",dur:4,instrucao:"Segure o ar com suavidade..."},
+    {nome:"EXPIRE",dur:6,instrucao:"Expire lentamente pela boca..."},
+    {nome:"PAUSA",dur:2,instrucao:"Breve pausa antes do próximo ciclo..."},
+  ];
+  const fase = fases[respFase % fases.length];
+  const escala = respFase % fases.length === 0 ? 1.2 : respFase % fases.length === 2 ? 0.85 : 1;
+
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Regulação Emocional</p><h2>Respiração Diafragmática</h2></div>
+    <p style="font-size:13px;color:#666;margin-bottom:1rem;line-height:1.6">A respiração diafragmática ativa o sistema nervoso parassimpático, reduzindo a tensão e promovendo o estado de calma e foco.</p>
+
+    <div class="cycles-row">
+      ${[0,1,2,3,4].map(i=>`<div class="cycle-dot ${i < respCiclo?"done":""}"></div>`).join("")}
     </div>
 
-    <div class="radar-wrap">
-      <canvas id="radarCanvas" width="480" height="320"></canvas>
+    <div class="resp-circle" id="resp-circle" style="transform:scale(${escala})">
+      <span class="phase">${respAtivo?(fases[respFase%fases.length].nome):"PRONTO"}</span>
+      <span class="count">${respAtivo?respContador:"▶"}</span>
     </div>
 
-    <div class="sub-grid">
-      ${scores.map((s,i)=>`
-        <div class="sub-card">
-          <p class="slabel">${s.nome}</p>
-          <p class="sval" style="color:${s.pct>=75?"#27ae60":s.pct>=50?"#C0A258":"#c0392b"}">${s.pct}%</p>
-          <div class="sbar"><div class="sbfill" style="width:${s.pct}%;background:${CORES[i]}"></div></div>
-        </div>`).join("")}
-    </div>
+    <p class="resp-instrucao">${respAtivo?(fases[respFase%fases.length].instrucao):"Toque para iniciar. Realize 5 ciclos completos."}</p>
 
-    <div class="interp">
-      <strong>Interpretação por subescala:</strong><br><br>
-      ${scores.map(s=>`
-        <div style="margin-bottom:10px">
-          <strong style="color:${s.pct>=75?"#27ae60":s.pct>=50?"#C0A258":"#c0392b"}">${s.nome} — ${s.pct}%</strong><br>
-          <span style="font-size:12px">${interps[s.nome]}</span>
-        </div>`).join("")}
-      <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--cr2);font-size:12px;color:#888">
-        Classificação: ≥75% = <span style="color:#27ae60">Alto</span> · 50–74% = <span style="color:#C0A258">Médio</span> · &lt;50% = <span style="color:#c0392b">Baixo</span><br>
-        Referência: Coimbra, D.R., Bara Filho, M., Andrade, A., & Miranda, R. (2013). Habilidades psicológicas de coping em atletas brasileiros. Motricidade, 9(1), 95-106.
+    ${respCiclo >= 5 ?
+      `<div style="background:#efffef;border:1px solid #27ae6044;border-radius:10px;padding:1rem;text-align:center;margin-bottom:1rem">
+        <p style="color:#27ae60;font-weight:500">✓ Sessão completa! 5 ciclos realizados.</p>
       </div>
+      <button class="btn-s" id="btn-reset" style="width:100%">Repetir</button>` :
+      `<button class="btn-p" id="btn-resp">${respAtivo?"Pausar":"Iniciar"}</button>`
+    }
+  </div>`;
+}
+
+function htmlGround(){
+  const passos = [
+    {num:5,sense:"VEJA",emoji:"👁",instruction:"Olhe ao redor e nomeie <strong>5 coisas</strong> que você consegue ver agora.",placeholder:"Ex: a bola, o grama, as traves, a camisa do colega, o placar..."},
+    {num:4,sense:"TOQUE",emoji:"✋",instruction:"Perceba <strong>4 coisas</strong> que você consegue tocar ou sentir fisicamente.",placeholder:"Ex: o chão sob os pés, a textura da camisa, o ar no rosto, a tensão nos músculos..."},
+    {num:3,sense:"OUÇA",emoji:"👂",instruction:"Preste atenção e identifique <strong>3 sons</strong> ao seu redor.",placeholder:"Ex: o barulho da torcida, o apito do árbitro, o som do vento..."},
+    {num:2,sense:"CHEIRE",emoji:"👃",instruction:"Identifique <strong>2 cheiros</strong> que você percebe agora.",placeholder:"Ex: o cheiro da grama, do suor, do ar..."},
+    {num:1,sense:"SABOREIE",emoji:"👅",instruction:"Perceba <strong>1 sabor</strong> ou sensação na boca agora.",placeholder:"Ex: água, chiclete, gosto de adrenalina..."},
+  ];
+  const p = passos[groundStep];
+  const prog = ((groundStep+1)/5)*100;
+
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Regulação Emocional</p><h2>Grounding 5-4-3-2-1</h2></div>
+    <p style="font-size:13px;color:#666;margin-bottom:1rem;line-height:1.6">Técnica de ancoragem sensorial para trazer o atleta ao momento presente e reduzir a ansiedade aguda.</p>
+
+    <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
+
+    <div class="grounding-step active">
+      <div class="num">${p.num}</div>
+      <div class="sense">${p.emoji} ${p.sense}</div>
+      <div class="instruction">${p.instruction}</div>
+      <textarea class="input-area" id="ground-input" rows="3" placeholder="${p.placeholder}">${groundRespostas[groundStep]}</textarea>
     </div>
 
+    <div style="display:flex;gap:10px;margin-top:12px">
+      ${groundStep > 0 ? `<button class="btn-s" id="btn-ground-prev">← Anterior</button>` : ""}
+      ${groundStep < 4 ?
+        `<button class="btn-p" id="btn-ground-next" style="flex:1">Próximo →</button>` :
+        `<button class="btn-p" id="btn-ground-done" style="flex:1">✓ Concluir</button>`
+      }
+    </div>
+
+    ${groundStep === 4 && groundRespostas[4] ?
+      `<div style="background:#efffef;border:1px solid #27ae6044;border-radius:10px;padding:1rem;margin-top:12px;font-size:13px;color:#27ae60;text-align:center">
+        ✓ Ancoragem completa. O atleta está no presente.
+      </div>` : ""
+    }
+  </div>`;
+}
+
+function htmlPsicoLista(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Psicoeducação</p><h2>Materiais para Sessão</h2></div>
+    ${PSICOEDUCACOES.map(p=>`
+      <div class="psico-card" style="cursor:pointer" data-view="psico-item" data-id="${p.id}">
+        <span class="tag">${p.tag}</span>
+        <h3>${p.titulo}</h3>
+        <p>${p.resumo}</p>
+      </div>`).join("")}
+  </div>`;
+}
+
+function htmlPsicoItem(){
+  const p = PSICOEDUCACOES.find(x=>x.id===psicoAtual);
+  if(!p) return htmlPsicoLista();
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">${p.tag}</p><h2>${p.titulo}</h2></div>
+    <div class="psico-card" id="conteudo-print">
+      <p>${p.conteudo.replace(/\n\n/g,"</p><p style='margin-top:10px'>")}</p>
+      <ul style="margin-top:12px">${p.pontos.map(pt=>`<li>${pt}</li>`).join("")}</ul>
+    </div>
     <button class="btn-print" onclick="window.print()">🖨 Imprimir / Salvar PDF</button>
-    <button class="btn-novo" id="btn-novo">Nova avaliação</button>
   </div>`;
 }
 
-function drawRadar() {
-  const {scores} = calcular();
-  const canvas = document.getElementById("radarCanvas");
-  if(!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const W=480, H=320, cx=W/2, cy=H/2, R=120;
-  ctx.clearRect(0,0,W,H);
-  const n = scores.length;
-  const ang = i => (Math.PI*2*i/n) - Math.PI/2;
-
-  // grades
-  [25,50,75,100].forEach(pct => {
-    const r = R*(pct/100);
-    ctx.beginPath();
-    scores.forEach((_,i)=>{ const a=ang(i); i===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)); });
-    ctx.closePath();
-    ctx.strokeStyle="#EEE8DA"; ctx.lineWidth=1; ctx.stroke();
-    ctx.fillStyle="#bbb"; ctx.font="9px sans-serif";
-    ctx.fillText(pct+"%", cx+4, cy-r+4);
+function bind(){
+  document.querySelectorAll("[data-view]").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const v = el.dataset.view;
+      if(v==="psico-item"){ psicoAtual=el.dataset.id; }
+      if(v==="resp"){ respAtivo=false; respFase=0; respContador=0; respCiclo=0; clearInterval(respTimer); }
+      if(v==="ground"){ groundStep=0; groundRespostas=["","","","",""]; }
+      view=v; render();
+    });
   });
-
-  // eixos
-  scores.forEach((_,i)=>{
-    const a=ang(i);
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
-    ctx.strokeStyle="#EEE8DA"; ctx.lineWidth=1; ctx.stroke();
-  });
-
-  // labels
-  scores.forEach((s,i)=>{
-    const a=ang(i), dist=R+22;
-    const x=cx+dist*Math.cos(a), y=cy+dist*Math.sin(a);
-    ctx.fillStyle="#304E38"; ctx.font="bold 10px sans-serif"; ctx.textAlign="center";
-    const words=s.nome.split(" ");
-    words.forEach((w,wi)=>ctx.fillText(w,x,y+(wi-(words.length-1)/2)*13));
-    ctx.fillStyle=s.pct>=75?"#27ae60":s.pct>=50?"#C0A258":"#c0392b";
-    ctx.font="bold 11px sans-serif";
-    ctx.fillText(s.pct+"%",x,y+(words.length/2)*13+12);
-  });
-
-  // polígono
-  ctx.beginPath();
-  scores.forEach((s,i)=>{ const a=ang(i), r=R*(s.pct/100); i===0?ctx.moveTo(cx+r*Math.cos(a),cy+r*Math.sin(a)):ctx.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a)); });
-  ctx.closePath();
-  ctx.fillStyle="rgba(48,78,56,0.15)"; ctx.fill();
-  ctx.strokeStyle="#304E38"; ctx.lineWidth=2; ctx.stroke();
-
-  // pontos
-  scores.forEach((s,i)=>{
-    const a=ang(i), r=R*(s.pct/100);
-    ctx.beginPath(); ctx.arc(cx+r*Math.cos(a),cy+r*Math.sin(a),4,0,Math.PI*2);
-    ctx.fillStyle="#304E38"; ctx.fill();
-  });
-}
-
-function bind() {
-  document.getElementById("btn-iniciar")?.addEventListener("click",()=>{
-    nomeAtleta=document.getElementById("inp-nome")?.value.trim()||"";
-    catAtleta=document.getElementById("inp-cat")?.value.trim()||"";
-    if(!nomeAtleta){ errMsg="Por favor, informe o nome do atleta."; render(); return; }
-    errMsg=""; questaoAtual=0; respostas=new Array(28).fill(null);
-    view="quiz"; render();
-  });
-
-  document.querySelectorAll(".scale-btn[data-v]").forEach(b=>b.addEventListener("click",()=>{
-    respostas[questaoAtual]=parseInt(b.dataset.v); errMsg=""; render();
-  }));
-
-  document.getElementById("btn-next")?.addEventListener("click",()=>{
-    if(respostas[questaoAtual]===null){ errMsg="Por favor, selecione uma resposta."; render(); return; }
-    if(questaoAtual<27){ questaoAtual++; errMsg=""; render(); }
-    else { view="result"; render(); }
-  });
-
-  document.getElementById("btn-prev")?.addEventListener("click",()=>{ if(questaoAtual>0){ questaoAtual--; errMsg=""; render(); } });
 
   document.getElementById("btn-back")?.addEventListener("click",()=>{
-    if(view==="quiz"){ view="intro"; render(); }
-    else if(view==="result"){ view="intro"; respostas=new Array(28).fill(null); render(); }
+    clearInterval(respTimer); respAtivo=false;
+    if(view==="psico-item") view="psico";
+    else view="home";
+    render();
   });
 
-  document.getElementById("btn-novo")?.addEventListener("click",()=>{
-    view="intro"; respostas=new Array(28).fill(null); nomeAtleta=""; catAtleta=""; render();
+  // respiração
+  document.getElementById("btn-resp")?.addEventListener("click",()=>{
+    if(respAtivo){ clearInterval(respTimer); respAtivo=false; render(); return; }
+    respAtivo=true;
+    const fases=[{dur:4},{dur:4},{dur:6},{dur:2}];
+    respContador=fases[respFase%4].dur;
+    render();
+    respTimer=setInterval(()=>{
+      respContador--;
+      if(respContador<=0){
+        respFase++;
+        if(respFase%4===0) respCiclo++;
+        if(respCiclo>=5){ clearInterval(respTimer); respAtivo=false; render(); return; }
+        respContador=fases[respFase%4].dur;
+      }
+      render();
+    },1000);
+  });
+
+  document.getElementById("btn-reset")?.addEventListener("click",()=>{
+    respFase=0; respContador=0; respCiclo=0; respAtivo=false; render();
+  });
+
+  // grounding
+  document.getElementById("btn-ground-next")?.addEventListener("click",()=>{
+    groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";
+    groundStep++; render();
+  });
+  document.getElementById("btn-ground-prev")?.addEventListener("click",()=>{
+    groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";
+    groundStep--; render();
+  });
+  document.getElementById("btn-ground-done")?.addEventListener("click",()=>{
+    groundRespostas[4]=document.getElementById("ground-input")?.value||"";
+    render();
   });
 }
 
