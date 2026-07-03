@@ -119,6 +119,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 /* ===================== BAÚ ORIGINAL ===================== */
 const CHECKIN_URL="https://erycaabastos-creator.github.io/checkin---prejogo/";
 const ACSI_URL="https://erycaabastos-creator.github.io/acsi-28/";
+const DINAMICAS_URL="https://erycaabastos-creator.github.io/bau-ferramentas/Bau_de_Dinamicas_Pre_Treino.docx";
 let view="home";
 let respAtivo=false,respFase=0,respContador=0,respCiclo=0,respTimer=null;
 let groundStep=0,groundRespostas=["","","","",""];
@@ -202,6 +203,15 @@ function htmlHome(){
           <div class="ctitle">${p.titulo}</div>
           <div class="cdesc">${p.resumo}</div>
         </div>`).join("")}
+    </div>
+
+    <p class="section-label">Documentos</p>
+    <div class="grid" style="grid-template-columns:1fr">
+      <a class="card" href="${DINAMICAS_URL}" target="_blank" style="display:block;text-decoration:none">
+        <div class="icon">📄</div>
+        <div class="ctitle">Baú de Dinâmicas — Pré-Treino</div>
+        <div class="cdesc">Atividades de campo para ativação psicológica antes dos treinos (.docx)</div>
+      </a>
     </div>
   </div>`;
 }
