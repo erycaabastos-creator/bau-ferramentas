@@ -55,20 +55,76 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .link-card p{color:var(--sg);font-size:13px;margin-bottom:12px}
 .link-card a{display:block;background:var(--do);color:var(--vd);padding:12px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none}
 @media print{.back,.btn-print{display:none}}
+
+/* ── TREINO COGNITIVO ── */
+#tc-app{max-width:600px;margin:0 auto;padding:0 0 2rem}
+.tc-menu-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:1rem}
+.tc-menu-card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.1rem 1.25rem;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.tc-menu-card:active{background:var(--cr)}
+.tc-menu-card .tc-icon{font-size:26px;flex-shrink:0}
+.tc-menu-card .tc-info .tc-title{font-size:15px;font-weight:600;color:var(--vd);margin-bottom:3px}
+.tc-menu-card .tc-info .tc-desc{font-size:12px;color:#888;line-height:1.4;margin-bottom:6px}
+.tc-menu-card .tc-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tc-menu-card .tc-tag{font-size:10px;font-weight:700;text-transform:uppercase;background:var(--cr2);color:var(--vd);padding:2px 8px;border-radius:20px}
+.tc-screen{display:none;flex-direction:column}
+.tc-screen.tc-active{display:flex}
+/* start screens */
+.tc-start{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1rem 1.25rem;gap:14px}
+.tc-start h3{font-size:18px;font-weight:700;color:var(--vd);margin:0}
+.tc-start p{font-size:13px;color:#666;line-height:1.6;max-width:400px}
+.tc-config-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tc-config-btn{padding:9px 16px;border-radius:30px;border:2px solid var(--sg);background:#fff;color:var(--vd);font-weight:700;cursor:pointer;font-size:13px}
+.tc-config-btn.tc-sel{background:var(--vd);color:#fff;border-color:var(--vd)}
+.tc-start-btn{padding:14px 44px;border-radius:40px;border:none;background:var(--do);color:#fff;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(192,162,88,.35)}
+/* play area */
+.tc-play-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:1rem 1.25rem}
+.tc-word{font-size:clamp(52px,12vw,110px);font-weight:900;line-height:1}
+.tc-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:480px}
+.tc-opt-btn{padding:16px 0;border-radius:14px;border:none;font-size:clamp(14px,3vw,18px);font-weight:800;color:#fff;cursor:pointer}
+.tc-feedback{height:28px;font-size:16px;font-weight:800}
+.tc-fb-ok{color:var(--vd)}
+.tc-fb-err{color:#c0392b}
+.tc-cmd{font-size:clamp(18px,4.5vw,32px);font-weight:800;text-align:center;color:var(--vd);min-height:70px;display:flex;align-items:center;justify-content:center;padding:0 12px}
+.tc-cmd.tc-decoy{color:#c0392b}
+.tc-timerbar-wrap{width:100%;max-width:480px;height:12px;background:var(--cr2);border-radius:10px;overflow:hidden}
+.tc-timerbar{height:100%;background:var(--do);width:100%;transition:width linear}
+.tc-action-row{display:flex;gap:12px}
+.tc-action-btn{padding:16px 26px;border-radius:14px;border:none;font-size:16px;font-weight:800;color:#fff;cursor:pointer}
+.tc-score{font-size:13px;color:var(--sg);font-weight:700}
+.tc-cue{font-size:clamp(22px,5vw,40px);font-weight:900;color:var(--vd);text-align:center;min-height:60px}
+.tc-prompt{font-size:14px;color:var(--sg);font-weight:700;text-align:center}
+.tc-nb-opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:480px;width:100%}
+.tc-nb-opt{padding:13px 18px;border-radius:12px;border:2px solid var(--sg);background:#fff;color:var(--vd);font-weight:800;font-size:14px;cursor:pointer;min-width:100px}
+.tc-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:480px;width:100%}
+.tc-chip{padding:6px 12px;border-radius:8px;background:var(--cr2);color:var(--vd);font-weight:700;font-size:13px;opacity:.5}
+.tc-chip.tc-cur{background:var(--vd);color:#fff;opacity:1;transform:scale(1.08)}
+.tc-progbar-wrap{width:100%;max-width:480px;height:8px;background:var(--cr2);border-radius:10px;overflow:hidden}
+.tc-progbar{height:100%;background:var(--sg);width:0%;transition:width .3s}
+/* result */
+.tc-result{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:1.5rem}
+.tc-res-num{font-size:64px;font-weight:900;color:var(--vd)}
+.tc-res-label{font-size:12px;color:var(--sg);text-transform:uppercase;font-weight:700;letter-spacing:1px}
+.tc-res-grid{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+/* flash */
+@keyframes tcFlashG{0%{background:#d4ecd9}100%{background:transparent}}
+@keyframes tcFlashR{0%{background:#f5d6d2}100%{background:transparent}}
+.tc-flash-ok{animation:tcFlashG .4s ease}
+.tc-flash-err{animation:tcFlashR .4s ease}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script>
-const CHECKIN_URL = "https://erycaabastos-creator.github.io/checkin---prejogo/";
-const ACSI_URL = "https://erycaabastos-creator.github.io/acsi-28/";
 
-let view = "home";
-let respAtivo=false, respFase=0, respContador=0, respCiclo=0, respTimer=null;
-let groundStep=0, groundRespostas=["","","","",""];
+<script>
+/* ===================== BAÚ ORIGINAL ===================== */
+const CHECKIN_URL="https://erycaabastos-creator.github.io/checkin---prejogo/";
+const ACSI_URL="https://erycaabastos-creator.github.io/acsi-28/";
+let view="home";
+let respAtivo=false,respFase=0,respContador=0,respCiclo=0,respTimer=null;
+let groundStep=0,groundRespostas=["","","","",""];
 let psicoAtual=null;
 
-const PSICOEDUCACOES = [
+const PSICOEDUCACOES=[
   {id:"ansiedade",titulo:"Ansiedade pré-competitiva",tag:"Regulação emocional",resumo:"A ansiedade antes da competição é normal e pode ser aliada — o que importa é como o atleta a interpreta.",conteudo:`A ansiedade pré-competitiva é uma resposta natural do organismo diante de situações desafiadoras. Ela ativa o sistema nervoso simpático, preparando o corpo para a ação: coração acelerado, músculos tensos, atenção aguçada.\n\nO problema não é sentir ansiedade — é interpretá-la como sinal de perigo. Atletas que reinterpretam essa ativação como "energia para competir" tendem a ter desempenho superior.`,pontos:["Ansiedade somática: sintomas físicos (coração acelerado, tensão muscular)","Ansiedade cognitiva: pensamentos negativos e preocupações","Nível ótimo de ativação varia de atleta para atleta","Técnicas de respiração e grounding ajudam a regular a intensidade"]},
   {id:"foco",titulo:"Foco e atenção na competição",tag:"Desempenho",resumo:"O foco é uma habilidade treinável. Saber onde colocar a atenção no momento certo é diferencial competitivo.",conteudo:`A atenção pode ser direcionada para dentro (pensamentos, sensações) ou para fora (ambiente, adversário). Na competição, o atleta precisa alternar entre esses focos com flexibilidade.\n\nDistrações são inevitáveis — o treino de foco ensina o atleta a perceber quando saiu do ponto ótimo de atenção e a retornar rapidamente, sem se punir.`,pontos:["Foco interno amplo: análise tática do jogo","Foco interno estreito: controle da respiração e sensações","Foco externo amplo: leitura do ambiente e adversários","Foco externo estreito: bola, gol, alvo","Rotinas pré-performance ajudam a 'ligar' o foco"]},
   {id:"confianca",titulo:"Confiança esportiva",tag:"Mentalidade",resumo:"A confiança não vem do sucesso — vem da relação que o atleta tem com seus próprios recursos.",conteudo:`A confiança esportiva é a crença do atleta na sua capacidade de executar as habilidades necessárias para o sucesso. Ela não é fixa — flutua de acordo com experiências, pensamentos e ambiente.\n\nAtletas com alta autoeficácia persistem diante de dificuldades, se recuperam mais rápido de erros e se comprometem mais com o treino.`,pontos:["Fontes de confiança: domínio (execução bem-feita), experiência vicária (ver outros), persuasão social (encorajamento)","Diálogo interno positivo fortalece a confiança","Erros não destroem confiança — a interpretação do erro sim","Ritual pré-jogo consolida a sensação de preparo"]},
@@ -76,8 +132,7 @@ const PSICOEDUCACOES = [
   {id:"erro",titulo:"Gestão do erro",tag:"Resiliência",resumo:"Como o atleta reage ao erro dentro da competição define muito mais o resultado do que o erro em si.",conteudo:`Errar é parte inevitável do esporte. O que diferencia atletas de alto rendimento não é a ausência de erros — é a velocidade e qualidade da recuperação após eles.\n\nAtletas que se punem excessivamente ficam presos no erro passado e perdem o foco no momento presente. O objetivo é desenvolver uma relação funcional com o erro: reconhecer, ajustar e seguir.`,pontos:["Evitar ruminação: reconheça o erro em no máximo 3 segundos","Gesto de reset: um movimento físico para 'fechar' o erro (ex: bater as mãos)","Foco no próximo ponto, não no erro anterior","Autocompaixão esportiva: tratar-se como trataria um colega de equipe"]},
 ];
 
-function render(){ document.getElementById("app").innerHTML=html(); bind(); }
-
+function render(){document.getElementById("app").innerHTML=html();bind();}
 function html(){
   if(view==="home")       return htmlHome();
   if(view==="checkin")    return htmlCheckin();
@@ -86,6 +141,7 @@ function html(){
   if(view==="ground")     return htmlGround();
   if(view==="psico")      return htmlPsicoLista();
   if(view==="psico-item") return htmlPsicoItem();
+  if(view==="cognitivo")  return htmlCognitivo();
   return "";
 }
 
@@ -112,6 +168,15 @@ function htmlHome(){
         <div class="icon">📊</div>
         <div class="ctitle">ACSI-28 — Inventário de Enfrentamento</div>
         <div class="cdesc">Avalia 7 habilidades psicológicas de coping. Correção automática com gráfico radar e comparativo longitudinal.</div>
+      </div>
+    </div>
+
+    <p class="section-label">Treino Cognitivo</p>
+    <div class="grid" style="grid-template-columns:1fr">
+      <div class="card destaque" data-view="cognitivo">
+        <div class="icon">🧠</div>
+        <div class="ctitle">Treino Cognitivo</div>
+        <div class="cdesc">Stroop · Simon Diz · N-Back de Dribles — concentração, foco e memória de trabalho</div>
       </div>
     </div>
 
@@ -145,17 +210,9 @@ function htmlCheckin(){
   return `<button class="back" id="btn-back">← Voltar</button>
   <div class="tela">
     <div class="tela-header"><p class="sub">Check-in Pré-Jogo</p><h2>Acesso Rápido</h2></div>
-    <div class="link-card">
-      <p>Link do formulário para os atletas</p>
-      <a href="${CHECKIN_URL}" target="_blank">Abrir Check-in →</a>
-    </div>
-    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)">
-      <p style="color:#666">Acesse o painel de resultados no mesmo link</p>
-      <a href="${CHECKIN_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir Painel →</a>
-    </div>
-    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">
-      💡 <strong style="color:var(--vd)">Dica:</strong> Envie o link pelo WhatsApp da categoria entre 18h e 20h do dia anterior ao jogo.
-    </div>
+    <div class="link-card"><p>Link do formulário para os atletas</p><a href="${CHECKIN_URL}" target="_blank">Abrir Check-in →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Acesse o painel de resultados no mesmo link</p><a href="${CHECKIN_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir Painel →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Dica:</strong> Envie o link pelo WhatsApp da categoria entre 18h e 20h do dia anterior ao jogo.</div>
   </div>`;
 }
 
@@ -163,17 +220,9 @@ function htmlAcsi(){
   return `<button class="back" id="btn-back">← Voltar</button>
   <div class="tela">
     <div class="tela-header"><p class="sub">Avaliação Psicológica</p><h2>ACSI-28</h2></div>
-    <div class="link-card">
-      <p>Enviar para o atleta preencher</p>
-      <a href="${ACSI_URL}" target="_blank">Abrir formulário para atleta →</a>
-    </div>
-    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)">
-      <p style="color:#666">Acessar painel de resultados e comparativos</p>
-      <a href="${ACSI_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir painel (senha) →</a>
-    </div>
-    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">
-      💡 <strong style="color:var(--vd)">Como usar:</strong> Envie o link para o atleta preencher. O atleta vê apenas "Avaliação concluída". Você acessa resultados, gráfico radar e comparativo longitudinal pelo painel com senha.
-    </div>
+    <div class="link-card"><p>Enviar para o atleta preencher</p><a href="${ACSI_URL}" target="_blank">Abrir formulário para atleta →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Acessar painel de resultados e comparativos</p><a href="${ACSI_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir painel (senha) →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Como usar:</strong> Envie o link para o atleta preencher. O atleta vê apenas "Avaliação concluída". Você acessa resultados, gráfico radar e comparativo longitudinal pelo painel com senha.</div>
   </div>`;
 }
 
@@ -186,10 +235,7 @@ function htmlResp(){
     <div class="tela-header"><p class="sub">Regulação Emocional</p><h2>Respiração Diafragmática</h2></div>
     <p style="font-size:13px;color:#666;margin-bottom:1rem;line-height:1.6">A respiração diafragmática ativa o sistema nervoso parassimpático, reduzindo a tensão e promovendo calma e foco.</p>
     <div class="cycles-row">${[0,1,2,3,4].map(i=>`<div class="cycle-dot ${i<respCiclo?"done":""}"></div>`).join("")}</div>
-    <div class="resp-circle" style="transform:scale(${escala})">
-      <span class="phase">${respAtivo?fase.nome:"PRONTO"}</span>
-      <span class="count">${respAtivo?respContador:"▶"}</span>
-    </div>
+    <div class="resp-circle" style="transform:scale(${escala})"><span class="phase">${respAtivo?fase.nome:"PRONTO"}</span><span class="count">${respAtivo?respContador:"▶"}</span></div>
     <p class="resp-instrucao">${respAtivo?fase.instrucao:"Toque para iniciar. Realize 5 ciclos completos."}</p>
     ${respCiclo>=5?`<div style="background:#efffef;border:1px solid #27ae6044;border-radius:10px;padding:1rem;text-align:center;margin-bottom:1rem"><p style="color:#27ae60;font-weight:500">✓ Sessão completa!</p></div><button class="btn-s" id="btn-reset" style="width:100%">Repetir</button>`:`<button class="btn-p" id="btn-resp">${respAtivo?"Pausar":"Iniciar"}</button>`}
   </div>`;
@@ -243,35 +289,412 @@ function htmlPsicoItem(){
   </div>`;
 }
 
+/* ===================== TREINO COGNITIVO ===================== */
+// Dados
+const TC_CORES=[
+  {name:"VERMELHO",hex:"#C0392B"},
+  {name:"AZUL",hex:"#2E5C8A"},
+  {name:"VERDE",hex:"#304E38"},
+  {name:"AMARELO",hex:"#C0A258"},
+  {name:"ROXO",hex:"#6C3F91"},
+];
+const TC_SIMON_CMDS=["toque o pé direito na bola","toque o pé esquerdo na bola","dê um giro de 360°","bata uma palma","levante o braço direito","pule uma vez","toque a bola com a sola","fique parado por 2 segundos","agache rapidamente","toque o joelho esquerdo","olhe para trás","estique os dois braços"];
+const TC_DRIBLES=["Drible direita","Drible esquerda","Parada","Giro","Elástico","Pedalada","Toque curto","Corte"];
+
+// Estado
+let tcSub="menu"; // menu | stroop-start | stroop-play | stroop-result | simon-start | simon-play | simon-result | nback-start | nback-play | nback-result
+let tcSTimer=null,tcSBarInt=null;
+// stroop
+let tcStTotal=15,tcStIdx=0,tcStHits=0,tcStErrs=0,tcStTimes=[],tcStStart=0,tcStCurColor=null;
+// simon
+let tcSmTotal=12,tcSmIdx=0,tcSmHits=0,tcSmMisses=0,tcSmDecoy=false,tcSmAnswered=false;
+const TC_SIMON_MS=3500;
+// nback
+let tcNbLevel=1,tcNbTotal=16,tcNbSeq=[],tcNbIdx=0,tcNbHits=0,tcNbMisses=0;
+
+function tcRender(){
+  const el=document.getElementById("tc-inner");
+  if(!el) return;
+  el.innerHTML=tcHtml();
+  tcBind();
+}
+
+function tcHtml(){
+  if(tcSub==="menu")          return tcHtmlMenu();
+  if(tcSub==="stroop-start")  return tcHtmlStroopStart();
+  if(tcSub==="stroop-play")   return tcHtmlStroopPlay();
+  if(tcSub==="stroop-result") return tcHtmlStroopResult();
+  if(tcSub==="simon-start")   return tcHtmlSimonStart();
+  if(tcSub==="simon-play")    return tcHtmlSimonPlay();
+  if(tcSub==="simon-result")  return tcHtmlSimonResult();
+  if(tcSub==="nback-start")   return tcHtmlNbackStart();
+  if(tcSub==="nback-play")    return tcHtmlNbackPlay();
+  if(tcSub==="nback-result")  return tcHtmlNbackResult();
+  return "";
+}
+
+function tcHtmlMenu(){
+  return `<div style="padding:1rem 1.25rem 2rem">
+    <div class="tela-header"><p class="sub">Treino Cognitivo</p><h2>Escolha a atividade</h2></div>
+    <div class="tc-menu-grid">
+      <div class="tc-menu-card" id="tc-go-stroop">
+        <div class="tc-icon">🎨</div>
+        <div class="tc-info">
+          <div class="tc-title">Teste de Stroop</div>
+          <div class="tc-desc">Diga a cor da tinta, não a palavra. Treina concentração e inibição de resposta automática.</div>
+          <div class="tc-tags"><span class="tc-tag">Concentração</span><span class="tc-tag">3–5 min</span></div>
+        </div>
+      </div>
+      <div class="tc-menu-card" id="tc-go-simon">
+        <div class="tc-icon">⚡</div>
+        <div class="tc-info">
+          <div class="tc-title">Simon Diz</div>
+          <div class="tc-desc">Só execute quando o comando começar com "Simon diz". Treina foco e controle inibitório.</div>
+          <div class="tc-tags"><span class="tc-tag">Foco</span><span class="tc-tag">4–6 min</span></div>
+        </div>
+      </div>
+      <div class="tc-menu-card" id="tc-go-nback">
+        <div class="tc-icon">🔁</div>
+        <div class="tc-info">
+          <div class="tc-title">N-Back de Dribles</div>
+          <div class="tc-desc">Lembre o movimento de 1 ou 2 rodadas atrás. Treina memória de trabalho.</div>
+          <div class="tc-tags"><span class="tc-tag">Memória</span><span class="tc-tag">5–7 min</span></div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* STROOP */
+function tcHtmlStroopStart(){
+  return `<div class="tc-start">
+    <div style="font-size:48px">🎨</div>
+    <h3>Diga a COR da tinta, não a palavra</h3>
+    <p>Escolha o número de rodadas e toque em Começar. Responda rápido — selecione a cor em que a palavra está escrita, ignorando o que ela diz.</p>
+    <div class="tc-config-row">
+      <button class="tc-config-btn ${tcStTotal===15?"tc-sel":""}" data-n="15">15 rodadas</button>
+      <button class="tc-config-btn ${tcStTotal===25?"tc-sel":""}" data-n="25">25 rodadas</button>
+      <button class="tc-config-btn ${tcStTotal===40?"tc-sel":""}" data-n="40">40 rodadas</button>
+    </div>
+    <button class="tc-start-btn" id="tc-stroop-go">COMEÇAR</button>
+    <button class="btn-s" id="tc-back-menu">← Menu</button>
+  </div>`;
+}
+
+function tcHtmlStroopPlay(){
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;background:rgba(255,255,255,.8)">
+    <button class="btn-s" id="tc-stroop-quit">Sair</button>
+    <span style="font-weight:700;color:var(--vd);font-size:13px">STROOP</span>
+    <span style="font-size:13px;color:var(--sg);font-weight:700" id="tc-st-counter">${tcStIdx} / ${tcStTotal}</span>
+  </div>
+  <div class="tc-play-area" id="tc-st-area">
+    <div class="tc-word" id="tc-st-word">—</div>
+    <div class="tc-feedback" id="tc-st-fb">&nbsp;</div>
+    <div class="tc-opts" id="tc-st-opts"></div>
+  </div>`;
+}
+
+function tcHtmlStroopResult(){
+  const avg=tcStTimes.length?(tcStTimes.reduce((a,b)=>a+b,0)/tcStTimes.length/1000).toFixed(2):"0";
+  const acc=Math.round((tcStHits/tcStTotal)*100);
+  return `<div class="tc-result">
+    <div class="tc-res-num">${acc}%</div>
+    <div class="tc-res-label">Precisão</div>
+    <div class="tc-res-grid">
+      <div><div class="tc-res-num" style="font-size:36px">${tcStHits}</div><div class="tc-res-label">Acertos</div></div>
+      <div><div class="tc-res-num" style="font-size:36px;color:#c0392b">${tcStErrs}</div><div class="tc-res-label">Erros</div></div>
+      <div><div class="tc-res-num" style="font-size:36px">${avg}s</div><div class="tc-res-label">Tempo médio</div></div>
+    </div>
+    <button class="tc-start-btn" id="tc-stroop-repeat">Repetir</button>
+    <button class="btn-s" id="tc-back-menu" style="margin-top:6px">← Menu</button>
+  </div>`;
+}
+
+/* SIMON */
+function tcHtmlSimonStart(){
+  return `<div class="tc-start">
+    <div style="font-size:48px">⚡</div>
+    <h3>Só execute quando ouvir "Simon diz"</h3>
+    <p>O comando aparece na tela. Se começar com <strong>"Simon diz"</strong>, toque em EXECUTAR. Se não tiver essa frase, toque em IGNORAR. Responda antes que a barra zere!</p>
+    <div class="tc-config-row">
+      <button class="tc-config-btn ${tcSmTotal===12?"tc-sel":""}" data-n="12">12 comandos</button>
+      <button class="tc-config-btn ${tcSmTotal===20?"tc-sel":""}" data-n="20">20 comandos</button>
+      <button class="tc-config-btn ${tcSmTotal===30?"tc-sel":""}" data-n="30">30 comandos</button>
+    </div>
+    <button class="tc-start-btn" id="tc-simon-go">COMEÇAR</button>
+    <button class="btn-s" id="tc-back-menu">← Menu</button>
+  </div>`;
+}
+
+function tcHtmlSimonPlay(){
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;background:rgba(255,255,255,.8)">
+    <button class="btn-s" id="tc-simon-quit">Sair</button>
+    <span style="font-weight:700;color:var(--vd);font-size:13px">SIMON DIZ</span>
+    <span style="font-size:13px;color:var(--sg);font-weight:700" id="tc-sm-counter">${tcSmIdx} / ${tcSmTotal}</span>
+  </div>
+  <div class="tc-play-area" id="tc-sm-area">
+    <div class="tc-cmd" id="tc-sm-cmd">Preparando...</div>
+    <div class="tc-timerbar-wrap"><div class="tc-timerbar" id="tc-sm-bar"></div></div>
+    <div class="tc-action-row">
+      <button class="tc-action-btn" style="background:var(--vd)" id="tc-sm-exec">EXECUTAR</button>
+      <button class="tc-action-btn" style="background:#c0392b" id="tc-sm-ignor">IGNORAR</button>
+    </div>
+    <div class="tc-score" id="tc-sm-score">Acertos: 0</div>
+  </div>`;
+}
+
+function tcHtmlSimonResult(){
+  const acc=Math.round((tcSmHits/tcSmTotal)*100);
+  return `<div class="tc-result">
+    <div class="tc-res-num">${acc}%</div>
+    <div class="tc-res-label">Precisão</div>
+    <div class="tc-res-grid">
+      <div><div class="tc-res-num" style="font-size:36px">${tcSmHits}</div><div class="tc-res-label">Acertos</div></div>
+      <div><div class="tc-res-num" style="font-size:36px;color:#c0392b">${tcSmMisses}</div><div class="tc-res-label">Erros</div></div>
+    </div>
+    <button class="tc-start-btn" id="tc-simon-repeat">Repetir</button>
+    <button class="btn-s" id="tc-back-menu" style="margin-top:6px">← Menu</button>
+  </div>`;
+}
+
+/* NBACK */
+function tcHtmlNbackStart(){
+  return `<div class="tc-start">
+    <div style="font-size:48px">🔁</div>
+    <h3>Lembre o movimento de antes</h3>
+    <p>A cada rodada aparece um movimento novo. Responda qual foi o movimento de <strong>N rodadas atrás</strong> — não o atual. Escolha o nível:</p>
+    <div class="tc-config-row">
+      <button class="tc-config-btn ${tcNbLevel===1?"tc-sel":""}" data-n="1">1-Back (mais fácil)</button>
+      <button class="tc-config-btn ${tcNbLevel===2?"tc-sel":""}" data-n="2">2-Back (mais difícil)</button>
+    </div>
+    <button class="tc-start-btn" id="tc-nback-go">COMEÇAR</button>
+    <button class="btn-s" id="tc-back-menu">← Menu</button>
+  </div>`;
+}
+
+function tcHtmlNbackPlay(){
+  const chips=tcNbSeq.slice(Math.max(0,tcNbIdx-4),tcNbIdx+1).map((m,i,a)=>{
+    const isCur=i===a.length-1;
+    return `<div class="tc-chip ${isCur?"tc-cur":""}">${tcNbIdx-a.length+i+2}</div>`;
+  }).join("");
+  const inWarmup=tcNbIdx<tcNbLevel;
+  const cue=tcNbIdx<tcNbSeq.length?tcNbSeq[tcNbIdx]:"—";
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.25rem;background:rgba(255,255,255,.8)">
+    <button class="btn-s" id="tc-nback-quit">Sair</button>
+    <span style="font-weight:700;color:var(--vd);font-size:13px">N-BACK · ${tcNbLevel}-BACK</span>
+    <span style="font-size:13px;color:var(--sg);font-weight:700" id="tc-nb-counter">${tcNbIdx+1} / ${tcNbTotal}</span>
+  </div>
+  <div class="tc-play-area" id="tc-nb-area">
+    <div class="tc-chips">${chips}</div>
+    <div class="tc-cue">${cue}</div>
+    <div class="tc-prompt">${inWarmup?`Memorize — aguardando ${tcNbLevel-tcNbIdx} rodada(s)`:`Qual foi o movimento de ${tcNbLevel} rodada(s) atrás?`}</div>
+    <div class="tc-nb-opts" id="tc-nb-opts">${inWarmup?"":"carregando..."}</div>
+    <div class="tc-progbar-wrap"><div class="tc-progbar" id="tc-nb-prog" style="width:${(tcNbIdx/tcNbTotal)*100}%"></div></div>
+  </div>`;
+}
+
+function tcHtmlNbackResult(){
+  const answered=tcNbTotal-tcNbLevel;
+  const acc=answered>0?Math.round((tcNbHits/answered)*100):0;
+  return `<div class="tc-result">
+    <div class="tc-res-num">${acc}%</div>
+    <div class="tc-res-label">Precisão · Nível ${tcNbLevel}-Back</div>
+    <div class="tc-res-grid">
+      <div><div class="tc-res-num" style="font-size:36px">${tcNbHits}</div><div class="tc-res-label">Acertos</div></div>
+      <div><div class="tc-res-num" style="font-size:36px;color:#c0392b">${tcNbMisses}</div><div class="tc-res-label">Erros</div></div>
+    </div>
+    <button class="tc-start-btn" id="tc-nback-repeat">Repetir</button>
+    <button class="btn-s" id="tc-back-menu" style="margin-top:6px">← Menu</button>
+  </div>`;
+}
+
+/* BIND */
+function tcBind(){
+  // menu
+  document.getElementById("tc-go-stroop")?.addEventListener("click",()=>{tcSub="stroop-start";tcRender();});
+  document.getElementById("tc-go-simon")?.addEventListener("click",()=>{tcSub="simon-start";tcRender();});
+  document.getElementById("tc-go-nback")?.addEventListener("click",()=>{tcSub="nback-start";tcRender();});
+  document.querySelectorAll("#tc-inner .tc-back-menu, #tc-inner #tc-back-menu").forEach(b=>b?.addEventListener("click",()=>{tcStop();tcSub="menu";tcRender();}));
+  document.getElementById("tc-back-menu")?.addEventListener("click",()=>{tcStop();tcSub="menu";tcRender();});
+
+  // stroop start
+  document.querySelectorAll("#tc-inner .tc-config-btn[data-n]").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const n=parseInt(b.dataset.n);
+      if(tcSub==="stroop-start") tcStTotal=n;
+      else if(tcSub==="simon-start") tcSmTotal=n;
+      else if(tcSub==="nback-start") tcNbLevel=n;
+      tcRender();
+    });
+  });
+  document.getElementById("tc-stroop-go")?.addEventListener("click",()=>{
+    tcStIdx=0;tcStHits=0;tcStErrs=0;tcStTimes=[];
+    tcSub="stroop-play";tcRender();tcStroopNext();
+  });
+  document.getElementById("tc-stroop-quit")?.addEventListener("click",()=>{tcStop();tcSub="stroop-start";tcRender();});
+  document.getElementById("tc-stroop-repeat")?.addEventListener("click",()=>{tcSub="stroop-start";tcRender();});
+
+  // simon start
+  document.getElementById("tc-simon-go")?.addEventListener("click",()=>{
+    tcSmIdx=0;tcSmHits=0;tcSmMisses=0;
+    tcSub="simon-play";tcRender();tcSimonNext();
+  });
+  document.getElementById("tc-simon-quit")?.addEventListener("click",()=>{tcStop();tcSub="simon-start";tcRender();});
+  document.getElementById("tc-sm-exec")?.addEventListener("click",()=>tcSimonAnswer(true));
+  document.getElementById("tc-sm-ignor")?.addEventListener("click",()=>tcSimonAnswer(false));
+  document.getElementById("tc-simon-repeat")?.addEventListener("click",()=>{tcSub="simon-start";tcRender();});
+
+  // nback
+  document.getElementById("tc-nback-go")?.addEventListener("click",()=>{
+    tcNbSeq=[];tcNbIdx=0;tcNbHits=0;tcNbMisses=0;
+    tcNbTotal=tcNbLevel+12;
+    for(let i=0;i<tcNbTotal;i++) tcNbSeq.push(TC_DRIBLES[Math.floor(Math.random()*TC_DRIBLES.length)]);
+    tcSub="nback-play";tcRender();tcNbackPopOpts();
+  });
+  document.getElementById("tc-nback-quit")?.addEventListener("click",()=>{tcStop();tcSub="nback-start";tcRender();});
+  document.getElementById("tc-nback-repeat")?.addEventListener("click",()=>{tcSub="nback-start";tcRender();});
+
+  // stroop play opts (dynamic)
+  if(tcSub==="stroop-play") tcStroopRenderOpts();
+  // nback opts
+  if(tcSub==="nback-play") tcNbackPopOpts();
+}
+
+function tcStop(){clearTimeout(tcSTimer);clearInterval(tcSBarInt);}
+
+/* STROOP LOGIC */
+function tcStroopNext(){
+  if(tcStIdx>=tcStTotal){tcSub="stroop-result";tcRender();return;}
+  tcStIdx++;
+  document.getElementById("tc-st-counter").textContent=`${tcStIdx} / ${tcStTotal}`;
+  document.getElementById("tc-st-fb").innerHTML="&nbsp;";
+  const word=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];
+  let color=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];
+  if(Math.random()<0.7){while(color.name===word.name) color=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];}
+  else color=word;
+  tcStCurColor=color;
+  const wEl=document.getElementById("tc-st-word");
+  wEl.textContent=word.name; wEl.style.color=color.hex;
+  let opts=[color];
+  while(opts.length<4){const c=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];if(!opts.find(o=>o.name===c.name))opts.push(c);}
+  opts.sort(()=>Math.random()-.5);
+  const wrap=document.getElementById("tc-st-opts");
+  wrap.innerHTML="";
+  opts.forEach(opt=>{
+    const b=document.createElement("button");
+    b.className="tc-opt-btn";b.style.background=opt.hex;b.textContent=opt.name;
+    b.addEventListener("click",()=>tcStroopAnswer(opt.name===color.name));
+    wrap.appendChild(b);
+  });
+  tcStStart=performance.now();
+}
+function tcStroopAnswer(correct){
+  tcStTimes.push(performance.now()-tcStStart);
+  const fb=document.getElementById("tc-st-fb");
+  if(correct){tcStHits++;fb.textContent="Certo!";fb.className="tc-feedback tc-fb-ok";}
+  else{tcStErrs++;fb.textContent="Era "+tcStCurColor.name;fb.className="tc-feedback tc-fb-err";}
+  setTimeout(tcStroopNext,350);
+}
+function tcStroopRenderOpts(){setTimeout(tcStroopNext,50);}
+
+/* SIMON LOGIC */
+function tcSimonNext(){
+  tcStop();
+  if(tcSmIdx>=tcSmTotal){tcSub="simon-result";tcRender();return;}
+  tcSmIdx++;tcSmAnswered=false;
+  document.getElementById("tc-sm-counter").textContent=`${tcSmIdx} / ${tcSmTotal}`;
+  const cmd=TC_SIMON_CMDS[Math.floor(Math.random()*TC_SIMON_CMDS.length)];
+  tcSmDecoy=Math.random()<0.35;
+  const cmdEl=document.getElementById("tc-sm-cmd");
+  cmdEl.textContent=tcSmDecoy?cmd.charAt(0).toUpperCase()+cmd.slice(1):"Simon diz: "+cmd;
+  cmdEl.className="tc-cmd"+(tcSmDecoy?" tc-decoy":"");
+  const bar=document.getElementById("tc-sm-bar");
+  bar.style.transition="none";bar.style.width="100%";void bar.offsetWidth;
+  bar.style.transition=`width ${TC_SIMON_MS}ms linear`;bar.style.width="0%";
+  tcSTimer=setTimeout(()=>{if(!tcSmAnswered) tcSimonRegister(tcSmDecoy);},TC_SIMON_MS);
+}
+function tcSimonAnswer(executed){
+  if(tcSmAnswered) return;tcSmAnswered=true;tcStop();
+  tcSimonRegister((executed&&!tcSmDecoy)||(!executed&&tcSmDecoy));
+}
+function tcSimonRegister(correct){
+  if(correct) tcSmHits++;else tcSmMisses++;
+  document.getElementById("tc-sm-score").textContent=`Acertos: ${tcSmHits}`;
+  const area=document.getElementById("tc-sm-area");
+  area.classList.add(correct?"tc-flash-ok":"tc-flash-err");
+  setTimeout(()=>area.classList.remove("tc-flash-ok","tc-flash-err"),400);
+  setTimeout(tcSimonNext,500);
+}
+
+/* NBACK LOGIC */
+function tcNbackPopOpts(){
+  if(tcSub!=="nback-play") return;
+  const inWarmup=tcNbIdx<tcNbLevel;
+  if(inWarmup){setTimeout(()=>{tcNbIdx++;tcRender();tcNbackPopOpts();},1600);return;}
+  const correctAns=tcNbSeq[tcNbIdx-tcNbLevel];
+  let opts=[correctAns];
+  while(opts.length<4){const m=TC_DRIBLES[Math.floor(Math.random()*TC_DRIBLES.length)];if(!opts.includes(m))opts.push(m);}
+  opts.sort(()=>Math.random()-.5);
+  const wrap=document.getElementById("tc-nb-opts");
+  if(!wrap) return;
+  wrap.innerHTML="";
+  opts.forEach(opt=>{
+    const b=document.createElement("button");
+    b.className="tc-nb-opt";b.textContent=opt;
+    b.addEventListener("click",()=>{
+      const correct=opt===correctAns;
+      if(correct) tcNbHits++;else tcNbMisses++;
+      const area=document.getElementById("tc-nb-area");
+      area.classList.add(correct?"tc-flash-ok":"tc-flash-err");
+      setTimeout(()=>{area.classList.remove("tc-flash-ok","tc-flash-err");tcNbIdx++;if(tcNbIdx>=tcNbTotal){tcSub="nback-result";tcRender();}else{tcRender();tcNbackPopOpts();}},400);
+    });
+    wrap.appendChild(b);
+  });
+}
+
+/* ===================== COGNITIVO WRAPPER ===================== */
+function htmlCognitivo(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div id="tc-app">
+    <div id="tc-inner"></div>
+  </div>`;
+}
+
+/* ===================== BIND GERAL ===================== */
 function bind(){
   document.querySelectorAll("[data-view]").forEach(el=>{
     el.addEventListener("click",()=>{
       const v=el.dataset.view;
       if(v==="psico-item") psicoAtual=el.dataset.id;
-      if(v==="resp"){ respAtivo=false; respFase=0; respContador=0; respCiclo=0; clearInterval(respTimer); }
-      if(v==="ground"){ groundStep=0; groundRespostas=["","","","",""]; }
-      view=v; render();
+      if(v==="resp"){respAtivo=false;respFase=0;respContador=0;respCiclo=0;clearInterval(respTimer);}
+      if(v==="ground"){groundStep=0;groundRespostas=["","","","",""];}
+      if(v==="cognitivo"){tcSub="menu";}
+      view=v;render();
+      if(v==="cognitivo") tcRender();
     });
   });
   document.getElementById("btn-back")?.addEventListener("click",()=>{
-    clearInterval(respTimer); respAtivo=false;
-    view=view==="psico-item"?"home":"home"; render();
+    clearInterval(respTimer);respAtivo=false;tcStop();
+    view="home";render();
   });
   document.getElementById("btn-resp")?.addEventListener("click",()=>{
-    if(respAtivo){ clearInterval(respTimer); respAtivo=false; render(); return; }
+    if(respAtivo){clearInterval(respTimer);respAtivo=false;render();return;}
     respAtivo=true;
     const fases=[{dur:4},{dur:4},{dur:6},{dur:2}];
-    respContador=fases[0].dur; render();
+    respContador=fases[0].dur;render();
     respTimer=setInterval(()=>{
       respContador--;
-      if(respContador<=0){ respFase++; if(respFase%4===0) respCiclo++; if(respCiclo>=5){ clearInterval(respTimer); respAtivo=false; render(); return; } respContador=fases[respFase%4].dur; }
+      if(respContador<=0){respFase++;if(respFase%4===0)respCiclo++;if(respCiclo>=5){clearInterval(respTimer);respAtivo=false;render();return;}respContador=fases[respFase%4].dur;}
       render();
     },1000);
   });
-  document.getElementById("btn-reset")?.addEventListener("click",()=>{ respFase=0; respContador=0; respCiclo=0; respAtivo=false; render(); });
-  document.getElementById("btn-ground-next")?.addEventListener("click",()=>{ groundRespostas[groundStep]=document.getElementById("ground-input")?.value||""; groundStep++; render(); });
-  document.getElementById("btn-ground-prev")?.addEventListener("click",()=>{ groundRespostas[groundStep]=document.getElementById("ground-input")?.value||""; groundStep--; render(); });
-  document.getElementById("btn-ground-done")?.addEventListener("click",()=>{ groundRespostas[4]=document.getElementById("ground-input")?.value||""; render(); });
+  document.getElementById("btn-reset")?.addEventListener("click",()=>{respFase=0;respContador=0;respCiclo=0;respAtivo=false;render();});
+  document.getElementById("btn-ground-next")?.addEventListener("click",()=>{groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";groundStep++;render();});
+  document.getElementById("btn-ground-prev")?.addEventListener("click",()=>{groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";groundStep--;render();});
+  document.getElementById("btn-ground-done")?.addEventListener("click",()=>{groundRespostas[4]=document.getElementById("ground-input")?.value||"";render();});
+
+  // se voltou para tela cognitivo, renderiza o sub-menu interno
+  if(view==="cognitivo") tcRender();
 }
 
 render();
