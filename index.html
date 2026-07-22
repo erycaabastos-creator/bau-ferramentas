@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Baú de Ferramentas — Eryca Bastos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#F8F4EC;min-height:100vh}
+:root{--cr:#F8F4EC;--cr2:#EEE8DA;--vd:#304E38;--sg:#8CA591;--do:#C0A258}
+
+/* HOME */
+.home{max-width:600px;margin:0 auto;padding:2rem 1rem}
+.hero{background:linear-gradient(135deg,#304E38 60%,#C0A258 100%);border-radius:16px;padding:1.75rem 1.5rem 1.5rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero::after{content:"PSI";position:absolute;right:-10px;bottom:-20px;font-size:100px;font-weight:900;color:#ffffff08;line-height:1}
+.hero .eyebrow{color:var(--do);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+.hero h1{color:var(--cr);font-size:26px;font-weight:500;margin:6px 0 4px}
+.hero p{color:#8CA591;font-size:13px}
+
+/* GRID DE PASTAS */
+.folders-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.folder{background:var(--vd);border-radius:12px;padding:1.1rem 1rem;cursor:pointer;transition:opacity .15s}
+.folder:active{opacity:.85}
+.folder .ficon{font-size:22px;margin-bottom:8px}
+.folder .ftitle{font-size:14px;font-weight:500;color:#F8F4EC;margin-bottom:3px}
+.folder .fdesc{font-size:11px;color:var(--sg);line-height:1.4}
+.folder.full{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:1rem}
+.folder.full .ficon{margin:0;font-size:22px}
+.folder.full .ftitle{margin-bottom:2px}
+
+/* TELA INTERNA */
+.tela{max-width:560px;margin:0 auto;padding:1.5rem 1rem}
+.back{background:none;border:none;color:var(--sg);font-size:13px;cursor:pointer;margin:1rem 0 0 1rem;display:block}
+.tela-header{background:linear-gradient(135deg,#304E38 60%,#C0A258 100%);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.tela-header .sub{color:var(--do);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.tela-header h2{color:var(--cr);font-size:20px;font-weight:500;margin-top:4px}
+
+/* CARDS INTERNOS (brancos) */
+.item-card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1rem 1.125rem;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item-card:active{background:var(--cr)}
+.item-card .ic-left{display:flex;align-items:center;gap:12px}
+.item-card .ic-icon{font-size:22px;flex-shrink:0}
+.item-card .ic-title{font-size:14px;font-weight:500;color:var(--vd);margin-bottom:2px}
+.item-card .ic-desc{font-size:12px;color:#999;line-height:1.4}
+.item-card .ic-arrow{color:var(--do);font-size:18px;flex-shrink:0}
+
+/* RESP, GROUND, PSICO, COGNITIVO — mantidos */
+.resp-circle{width:180px;height:180px;border-radius:50%;background:var(--vd);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:1.5rem auto;transition:transform 1s ease-in-out}
+.resp-circle .phase{color:var(--do);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.resp-circle .count{color:var(--cr);font-size:48px;font-weight:300;line-height:1}
+.resp-instrucao{text-align:center;font-size:14px;color:#666;margin-bottom:1.5rem;min-height:40px}
+.btn-p{width:100%;padding:14px;background:var(--vd);color:var(--cr);border:none;border-radius:10px;font-size:16px;font-weight:500;cursor:pointer}
+.btn-s{padding:10px 20px;border-radius:8px;border:1px solid var(--cr2);background:var(--cr);color:var(--vd);font-size:14px;cursor:pointer}
+.cycles-row{display:flex;justify-content:center;gap:8px;margin-bottom:1.5rem}
+.cycle-dot{width:10px;height:10px;border-radius:50%;background:var(--cr2)}
+.cycle-dot.done{background:var(--vd)}
+.grounding-step{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:12px}
+.grounding-step .num{font-size:32px;font-weight:700;color:var(--do);line-height:1}
+.grounding-step .sense{font-size:16px;font-weight:500;color:var(--vd);margin:4px 0 8px}
+.grounding-step .instruction{font-size:14px;color:#555;line-height:1.6}
+.grounding-step .input-area{width:100%;margin-top:12px;padding:10px;border-radius:8px;border:1px solid var(--cr2);font-size:14px;font-family:inherit;resize:none;background:var(--cr)}
+.progress-bar{height:6px;background:var(--cr2);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:var(--vd);border-radius:3px;transition:width .3s}
+.psico-card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.25rem;margin-bottom:12px}
+.psico-card h3{font-size:15px;font-weight:500;color:var(--vd);margin-bottom:8px}
+.psico-card p{font-size:13px;color:#555;line-height:1.7;margin-bottom:8px}
+.psico-card .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--cr2);color:var(--vd);margin-bottom:8px}
+.psico-card ul{padding-left:1.2rem;font-size:13px;color:#555;line-height:1.8}
+.btn-print{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--cr2);background:var(--cr);color:var(--vd);font-size:13px;cursor:pointer;margin-top:8px}
+.link-card{background:var(--vd);border-radius:12px;padding:1.5rem;margin-bottom:12px;text-align:center}
+.link-card p{color:var(--sg);font-size:13px;margin-bottom:12px}
+.link-card a{display:block;background:var(--do);color:var(--vd);padding:12px;border-radius:8px;font-weight:600;font-size:15px;text-decoration:none}
+@media print{.back,.btn-print{display:none}}
+
+/* TREINO COGNITIVO */
+#tc-app{max-width:600px;margin:0 auto;padding:0 0 2rem}
+.tc-menu-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:1rem}
+.tc-menu-card{background:#fff;border:1px solid var(--cr2);border-radius:12px;padding:1.1rem 1.25rem;cursor:pointer;display:flex;gap:14px;align-items:flex-start}
+.tc-menu-card:active{background:var(--cr)}
+.tc-menu-card .tc-icon{font-size:26px;flex-shrink:0}
+.tc-menu-card .tc-info .tc-title{font-size:15px;font-weight:600;color:var(--vd);margin-bottom:3px}
+.tc-menu-card .tc-info .tc-desc{font-size:12px;color:#888;line-height:1.4;margin-bottom:6px}
+.tc-menu-card .tc-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tc-menu-card .tc-tag{font-size:10px;font-weight:700;text-transform:uppercase;background:var(--cr2);color:var(--vd);padding:2px 8px;border-radius:20px}
+.tc-screen{display:none;flex-direction:column}
+.tc-screen.tc-active{display:flex}
+.tc-start{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1rem 1.25rem;gap:14px}
+.tc-start h3{font-size:18px;font-weight:700;color:var(--vd);margin:0}
+.tc-start p{font-size:13px;color:#666;line-height:1.6;max-width:400px}
+.tc-config-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tc-config-btn{padding:9px 16px;border-radius:30px;border:2px solid var(--sg);background:#fff;color:var(--vd);font-weight:700;cursor:pointer;font-size:13px}
+.tc-config-btn.tc-sel{background:var(--vd);color:#fff;border-color:var(--vd)}
+.tc-start-btn{padding:14px 44px;border-radius:40px;border:none;background:var(--do);color:#fff;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(192,162,88,.35)}
+.tc-play-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:1rem 1.25rem}
+.tc-word{font-size:clamp(52px,12vw,110px);font-weight:900;line-height:1}
+.tc-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;max-width:480px}
+.tc-opt-btn{padding:16px 0;border-radius:14px;border:none;font-size:clamp(14px,3vw,18px);font-weight:800;color:#fff;cursor:pointer}
+.tc-feedback{height:28px;font-size:16px;font-weight:800}
+.tc-fb-ok{color:var(--vd)}
+.tc-fb-err{color:#c0392b}
+.tc-cmd{font-size:clamp(18px,4.5vw,32px);font-weight:800;text-align:center;color:var(--vd);min-height:70px;display:flex;align-items:center;justify-content:center;padding:0 12px}
+.tc-cmd.tc-decoy{color:#c0392b}
+.tc-timerbar-wrap{width:100%;max-width:480px;height:12px;background:var(--cr2);border-radius:10px;overflow:hidden}
+.tc-timerbar{height:100%;background:var(--do);width:100%;transition:width linear}
+.tc-action-row{display:flex;gap:12px}
+.tc-action-btn{padding:16px 26px;border-radius:14px;border:none;font-size:16px;font-weight:800;color:#fff;cursor:pointer}
+.tc-score{font-size:13px;color:var(--sg);font-weight:700}
+.tc-cue{font-size:clamp(22px,5vw,40px);font-weight:900;color:var(--vd);text-align:center;min-height:60px}
+.tc-prompt{font-size:14px;color:var(--sg);font-weight:700;text-align:center}
+.tc-nb-opts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:480px;width:100%}
+.tc-nb-opt{padding:13px 18px;border-radius:12px;border:2px solid var(--sg);background:#fff;color:var(--vd);font-weight:800;font-size:14px;cursor:pointer;min-width:100px}
+.tc-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:480px;width:100%}
+.tc-chip{padding:6px 12px;border-radius:8px;background:var(--cr2);color:var(--vd);font-weight:700;font-size:13px;opacity:.5}
+.tc-chip.tc-cur{background:var(--vd);color:#fff;opacity:1;transform:scale(1.08)}
+.tc-progbar-wrap{width:100%;max-width:480px;height:8px;background:var(--cr2);border-radius:10px;overflow:hidden}
+.tc-progbar{height:100%;background:var(--sg);width:0%;transition:width .3s}
+.tc-result{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:1.5rem}
+.tc-res-num{font-size:64px;font-weight:900;color:var(--vd)}
+.tc-res-label{font-size:12px;color:var(--sg);text-transform:uppercase;font-weight:700;letter-spacing:1px}
+.tc-res-grid{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+@keyframes tcFlashG{0%{background:#d4ecd9}100%{background:transparent}}
+@keyframes tcFlashR{0%{background:#f5d6d2}100%{background:transparent}}
+.tc-flash-ok{animation:tcFlashG .4s ease}
+.tc-flash-err{animation:tcFlashR .4s ease}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const CHECKIN_URL="https://erycaabastos-creator.github.io/checkin---prejogo/";
+const ACSI_URL="https://erycaabastos-creator.github.io/acsi-28/";
+const POMS_URL="https://erycaabastos-creator.github.io/poms-escala-humor/";
+const POMS_COMP_URL="https://erycaabastos-creator.github.io/poms-escala-humor/poms-comparativo.html";
+const DINAMICAS_URL="https://erycaabastos-creator.github.io/bau-ferramentas/Bau_de_Dinamicas_Pre_Treino.docx";
+const VARK_OFICIAL_URL="https://vark-learn.com/questionario/";
+const VARK_FICHA_URL="https://erycaabastos-creator.github.io/bau-ferramentas/vark/";
+
+let view="home";
+let respAtivo=false,respFase=0,respContador=0,respCiclo=0,respTimer=null;
+let groundStep=0,groundRespostas=["","","","",""];
+let psicoAtual=null;
+
+const PSICOEDUCACOES=[
+  {id:"ansiedade",titulo:"Ansiedade pré-competitiva",tag:"Regulação emocional",resumo:"A ansiedade antes da competição é normal e pode ser aliada — o que importa é como o atleta a interpreta.",conteudo:`A ansiedade pré-competitiva é uma resposta natural do organismo diante de situações desafiadoras. Ela ativa o sistema nervoso simpático, preparando o corpo para a ação: coração acelerado, músculos tensos, atenção aguçada.\n\nO problema não é sentir ansiedade — é interpretá-la como sinal de perigo. Atletas que reinterpretam essa ativação como "energia para competir" tendem a ter desempenho superior.`,pontos:["Ansiedade somática: sintomas físicos (coração acelerado, tensão muscular)","Ansiedade cognitiva: pensamentos negativos e preocupações","Nível ótimo de ativação varia de atleta para atleta","Técnicas de respiração e grounding ajudam a regular a intensidade"]},
+  {id:"foco",titulo:"Foco e atenção na competição",tag:"Desempenho",resumo:"O foco é uma habilidade treinável. Saber onde colocar a atenção no momento certo é diferencial competitivo.",conteudo:`A atenção pode ser direcionada para dentro (pensamentos, sensações) ou para fora (ambiente, adversário). Na competição, o atleta precisa alternar entre esses focos com flexibilidade.\n\nDistrações são inevitáveis — o treino de foco ensina o atleta a perceber quando saiu do ponto ótimo de atenção e a retornar rapidamente, sem se punir.`,pontos:["Foco interno amplo: análise tática do jogo","Foco interno estreito: controle da respiração e sensações","Foco externo amplo: leitura do ambiente e adversários","Foco externo estreito: bola, gol, alvo","Rotinas pré-performance ajudam a 'ligar' o foco"]},
+  {id:"confianca",titulo:"Confiança esportiva",tag:"Mentalidade",resumo:"A confiança não vem do sucesso — vem da relação que o atleta tem com seus próprios recursos.",conteudo:`A confiança esportiva é a crença do atleta na sua capacidade de executar as habilidades necessárias para o sucesso. Ela não é fixa — flutua de acordo com experiências, pensamentos e ambiente.\n\nAtletas com alta autoeficácia persistem diante de dificuldades, se recuperam mais rápido de erros e se comprometem mais com o treino.`,pontos:["Fontes de confiança: domínio (execução bem-feita), experiência vicária (ver outros), persuasão social (encorajamento)","Diálogo interno positivo fortalece a confiança","Erros não destroem confiança — a interpretação do erro sim","Ritual pré-jogo consolida a sensação de preparo"]},
+  {id:"rotina",titulo:"Rotina pré-jogo",tag:"Preparação",resumo:"Uma rotina consistente antes da competição cria um estado mental previsível e favorável ao desempenho.",conteudo:`A rotina pré-competitiva é uma sequência de comportamentos físicos e mentais que o atleta realiza antes de competir. Ela funciona como um "gatilho" para o estado ideal de desempenho.\n\nNão precisa ser longa — pode ter 15 a 30 minutos. O que importa é a consistência e o significado que o atleta atribui a cada etapa.`,pontos:["Inclui componentes físicos: aquecimento, alimentação, sono","Inclui componentes mentais: visualização, música, respiração","Deve ser personalizada — o que funciona para um pode não funcionar para outro","Treinar a rotina em situações de baixa pressão para automatizar"]},
+  {id:"erro",titulo:"Gestão do erro",tag:"Resiliência",resumo:"Como o atleta reage ao erro dentro da competição define muito mais o resultado do que o erro em si.",conteudo:`Errar é parte inevitável do esporte. O que diferencia atletas de alto rendimento não é a ausência de erros — é a velocidade e qualidade da recuperação após eles.\n\nAtletas que se punem excessivamente ficam presos no erro passado e perdem o foco no momento presente. O objetivo é desenvolver uma relação funcional com o erro: reconhecer, ajustar e seguir.`,pontos:["Evitar ruminação: reconheça o erro em no máximo 3 segundos","Gesto de reset: um movimento físico para 'fechar' o erro (ex: bater as mãos)","Foco no próximo ponto, não no erro anterior","Autocompaixão esportiva: tratar-se como trataria um colega de equipe"]},
+];
+
+function render(){document.getElementById("app").innerHTML=html();bind();}
+function html(){
+  if(view==="home")       return htmlHome();
+  if(view==="pasta-checkin")   return htmlPastaCheckin();
+  if(view==="pasta-poms")      return htmlPastaPoms();
+  if(view==="pasta-acsi")      return htmlPastaAcsi();
+  if(view==="pasta-vark")      return htmlPastaVark();
+  if(view==="pasta-reg")       return htmlPastaReg();
+  if(view==="pasta-psico")     return htmlPastaPsico();
+  if(view==="pasta-docs")      return htmlPastaDocs();
+  if(view==="resp")       return htmlResp();
+  if(view==="ground")     return htmlGround();
+  if(view==="psico-item") return htmlPsicoItem();
+  if(view==="cognitivo")  return htmlCognitivo();
+  return "";
+}
+
+function htmlHome(){
+  return `<div class="home">
+    <div class="hero">
+      <p class="eyebrow">Psicologia do Esporte</p>
+      <h1>Baú de Ferramentas</h1>
+      <p>Eryca Bastos · Psicologia do Esporte</p>
+    </div>
+    <div class="folders-grid">
+      <div class="folder" data-view="pasta-checkin">
+        <div class="ficon">📋</div>
+        <div class="ftitle">Check-in</div>
+        <div class="fdesc">Pré-Jogo</div>
+      </div>
+      <div class="folder" data-view="pasta-poms">
+        <div class="ficon">📊</div>
+        <div class="ftitle">POMS</div>
+        <div class="fdesc">Escala de Humor</div>
+      </div>
+      <div class="folder" data-view="pasta-acsi">
+        <div class="ficon">📈</div>
+        <div class="ftitle">ACSI-28</div>
+        <div class="fdesc">Enfrentamento</div>
+      </div>
+      <div class="folder" data-view="pasta-vark">
+        <div class="ficon">🎓</div>
+        <div class="ftitle">VARK</div>
+        <div class="fdesc">Estilo de Aprendizagem</div>
+      </div>
+      <div class="folder" data-view="cognitivo">
+        <div class="ficon">🧠</div>
+        <div class="ftitle">Treino Cognitivo</div>
+        <div class="fdesc">Stroop · Simon · N-Back</div>
+      </div>
+      <div class="folder" data-view="pasta-reg">
+        <div class="ficon">🫁</div>
+        <div class="ftitle">Regulação Emocional</div>
+        <div class="fdesc">Respiração · Grounding</div>
+      </div>
+      <div class="folder" data-view="pasta-psico">
+        <div class="ficon">📖</div>
+        <div class="ftitle">Psicoeducação</div>
+        <div class="fdesc">${PSICOEDUCACOES.length} materiais</div>
+      </div>
+      <div class="folder full" data-view="pasta-docs">
+        <div class="ficon">📁</div>
+        <div>
+          <div class="ftitle">Documentos</div>
+          <div class="fdesc">Relatórios e materiais para download</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function htmlPastaCheckin(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>Check-in Pré-Jogo</h2></div>
+    <div class="link-card"><p>Link do formulário para os atletas</p><a href="${CHECKIN_URL}" target="_blank">Abrir Check-in →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Painel de resultados com senha</p><a href="${CHECKIN_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir Painel →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Dica:</strong> Envie o link pelo WhatsApp da categoria entre 18h e 20h do dia anterior ao jogo.</div>
+  </div>`;
+}
+
+function htmlPastaPoms(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>POMS — Escala de Humor</h2></div>
+    <div class="link-card"><p>Questionário para o atleta responder</p><a href="${POMS_URL}" target="_blank">Abrir questionário →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Comparativo longitudinal com senha</p><a href="${POMS_COMP_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir comparativo →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Como usar:</strong> Envie o link do questionário ao atleta. O atleta não vê o resultado. Você acessa os gráficos e comparativo pelo painel com senha.</div>
+  </div>`;
+}
+
+function htmlPastaAcsi(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>ACSI-28</h2></div>
+    <div class="link-card"><p>Enviar para o atleta preencher</p><a href="${ACSI_URL}" target="_blank">Abrir formulário para atleta →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Painel de resultados e comparativos</p><a href="${ACSI_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir painel (senha) →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Como usar:</strong> Envie o link ao atleta. O atleta vê apenas "Avaliação concluída". Você acessa resultados, gráfico radar e comparativo longitudinal pelo painel com senha.</div>
+  </div>`;
+}
+
+function htmlPastaVark(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>VARK — Estilo de Aprendizagem</h2></div>
+    <div class="link-card"><p>Questionário oficial para o atleta responder</p><a href="${VARK_OFICIAL_URL}" target="_blank">Abrir questionário →</a></div>
+    <div class="link-card" style="background:var(--cr);border:1px solid var(--cr2)"><p style="color:#666">Ficha de resultado (uso técnico interno)</p><a href="${VARK_FICHA_URL}" target="_blank" style="background:var(--vd);color:var(--cr)">Abrir ficha →</a></div>
+    <div style="background:var(--cr2);border-radius:10px;padding:1rem;font-size:13px;color:#666;line-height:1.6">💡 <strong style="color:var(--vd)">Como usar:</strong> O atleta responde no site oficial do VARK, que já mostra a pontuação ao final. Você insere esses 4 escores na ficha para gerar o gráfico, a classificação e o embasamento teórico de cada estilo.</div>
+  </div>`;
+}
+
+function htmlPastaReg(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>Regulação Emocional</h2></div>
+    <div class="item-card" data-view="resp">
+      <div class="ic-left">
+        <div class="ic-icon">🫁</div>
+        <div>
+          <div class="ic-title">Respiração Diafragmática</div>
+          <div class="ic-desc">Guia animado com ciclos de respiração</div>
+        </div>
+      </div>
+      <div class="ic-arrow">→</div>
+    </div>
+    <div class="item-card" data-view="ground">
+      <div class="ic-left">
+        <div class="ic-icon">🌱</div>
+        <div>
+          <div class="ic-title">Grounding 5-4-3-2-1</div>
+          <div class="ic-desc">Técnica de ancoragem sensorial passo a passo</div>
+        </div>
+      </div>
+      <div class="ic-arrow">→</div>
+    </div>
+  </div>`;
+}
+
+function htmlPastaPsico(){
+  const icons={"ansiedade":"😰","foco":"🎯","confianca":"💪","rotina":"🔄","erro":"⚡"};
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>Psicoeducação</h2></div>
+    ${PSICOEDUCACOES.map(p=>`
+    <div class="item-card" data-view="psico-item" data-id="${p.id}">
+      <div class="ic-left">
+        <div class="ic-icon">${icons[p.id]||"📄"}</div>
+        <div>
+          <div class="ic-title">${p.titulo}</div>
+          <div class="ic-desc">${p.resumo.substring(0,60)}...</div>
+        </div>
+      </div>
+      <div class="ic-arrow">→</div>
+    </div>`).join("")}
+  </div>`;
+}
+
+function htmlPastaDocs(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub" id="btn-back">← Baú de Ferramentas</p><h2>Documentos</h2></div>
+    <a class="item-card" href="${DINAMICAS_URL}" target="_blank" style="text-decoration:none">
+      <div class="ic-left">
+        <div class="ic-icon">📄</div>
+        <div>
+          <div class="ic-title">Baú de Dinâmicas — Pré-Treino</div>
+          <div class="ic-desc">Atividades de ativação psicológica antes dos treinos (.docx)</div>
+        </div>
+      </div>
+      <div class="ic-arrow">→</div>
+    </a>
+  </div>`;
+}
+
+function htmlResp(){
+  const fases=[{nome:"INSPIRE",dur:4,instrucao:"Inspire lentamente pelo nariz..."},{nome:"SEGURE",dur:4,instrucao:"Segure o ar com suavidade..."},{nome:"EXPIRE",dur:6,instrucao:"Expire lentamente pela boca..."},{nome:"PAUSA",dur:2,instrucao:"Breve pausa antes do próximo ciclo..."}];
+  const fase=fases[respFase%4];
+  const escala=respFase%4===0?1.2:respFase%4===2?0.85:1;
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Regulação Emocional</p><h2>Respiração Diafragmática</h2></div>
+    <p style="font-size:13px;color:#666;margin-bottom:1rem;line-height:1.6">A respiração diafragmática ativa o sistema nervoso parassimpático, reduzindo a tensão e promovendo calma e foco.</p>
+    <div class="cycles-row">${[0,1,2,3,4].map(i=>`<div class="cycle-dot ${i<respCiclo?"done":""}"></div>`).join("")}</div>
+    <div class="resp-circle" style="transform:scale(${escala})"><span class="phase">${respAtivo?fase.nome:"PRONTO"}</span><span class="count">${respAtivo?respContador:"▶"}</span></div>
+    <p class="resp-instrucao">${respAtivo?fase.instrucao:"Toque para iniciar. Realize 5 ciclos completos."}</p>
+    ${respCiclo>=5?`<div style="background:#efffef;border:1px solid #27ae6044;border-radius:10px;padding:1rem;text-align:center;margin-bottom:1rem"><p style="color:#27ae60;font-weight:500">✓ Sessão completa!</p></div><button class="btn-s" id="btn-reset" style="width:100%">Repetir</button>`:`<button class="btn-p" id="btn-resp">${respAtivo?"Pausar":"Iniciar"}</button>`}
+  </div>`;
+}
+
+function htmlGround(){
+  const passos=[
+    {num:5,sense:"VEJA",emoji:"👁",instruction:"Olhe ao redor e nomeie <strong>5 coisas</strong> que você consegue ver agora.",placeholder:"Ex: a bola, o grama, as traves..."},
+    {num:4,sense:"TOQUE",emoji:"✋",instruction:"Perceba <strong>4 coisas</strong> que você consegue tocar ou sentir fisicamente.",placeholder:"Ex: o chão sob os pés, a textura da camisa..."},
+    {num:3,sense:"OUÇA",emoji:"👂",instruction:"Identifique <strong>3 sons</strong> ao seu redor.",placeholder:"Ex: barulho da torcida, apito do árbitro..."},
+    {num:2,sense:"CHEIRE",emoji:"👃",instruction:"Identifique <strong>2 cheiros</strong> que você percebe agora.",placeholder:"Ex: cheiro da grama, do suor..."},
+    {num:1,sense:"SABOREIE",emoji:"👅",instruction:"Perceba <strong>1 sabor</strong> ou sensação na boca agora.",placeholder:"Ex: água, chiclete..."},
+  ];
+  const p=passos[groundStep];
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">Regulação Emocional</p><h2>Grounding 5-4-3-2-1</h2></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${((groundStep+1)/5)*100}%"></div></div>
+    <div class="grounding-step">
+      <div class="num">${p.num}</div>
+      <div class="sense">${p.emoji} ${p.sense}</div>
+      <div class="instruction">${p.instruction}</div>
+      <textarea class="input-area" id="ground-input" rows="3" placeholder="${p.placeholder}">${groundRespostas[groundStep]}</textarea>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px">
+      ${groundStep>0?`<button class="btn-s" id="btn-ground-prev">← Anterior</button>`:""}
+      ${groundStep<4?`<button class="btn-p" id="btn-ground-next" style="flex:1">Próximo →</button>`:`<button class="btn-p" id="btn-ground-done" style="flex:1">✓ Concluir</button>`}
+    </div>
+  </div>`;
+}
+
+function htmlPsicoItem(){
+  const p=PSICOEDUCACOES.find(x=>x.id===psicoAtual);
+  if(!p) return htmlPastaPsico();
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div class="tela">
+    <div class="tela-header"><p class="sub">${p.tag}</p><h2>${p.titulo}</h2></div>
+    <div class="psico-card" id="conteudo-print">
+      <p>${p.conteudo.replace(/\n\n/g,"</p><p style='margin-top:10px'>")}</p>
+      <ul style="margin-top:12px">${p.pontos.map(pt=>`<li>${pt}</li>`).join("")}</ul>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨 Imprimir / Salvar PDF</button>
+  </div>`;
+}
+
+function htmlCognitivo(){
+  return `<button class="back" id="btn-back">← Voltar</button>
+  <div id="tc-app">
+    <div id="tc-inner"></div>
+  </div>`;
+}
+
+function bind(){
+  document.querySelectorAll("[data-view]").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const v=el.dataset.view;
+      if(v==="psico-item") psicoAtual=el.dataset.id;
+      if(v==="resp"){respAtivo=false;respFase=0;respContador=0;respCiclo=0;clearInterval(respTimer);}
+      if(v==="ground"){groundStep=0;groundRespostas=["","","","",""];}
+      if(v==="cognitivo"){tcSub="menu";}
+      view=v;render();
+      if(v==="cognitivo") tcRender();
+    });
+  });
+  document.getElementById("btn-back")?.addEventListener("click",()=>{
+    clearInterval(respTimer);respAtivo=false;tcStop();
+    if(view==="resp"||view==="ground") view="pasta-reg";
+    else if(view==="psico-item") view="pasta-psico";
+    else view="home";
+    render();
+  });
+  document.getElementById("btn-resp")?.addEventListener("click",()=>{
+    if(respAtivo){clearInterval(respTimer);respAtivo=false;render();return;}
+    respAtivo=true;
+    const fases=[{dur:4},{dur:4},{dur:6},{dur:2}];
+    respContador=fases[0].dur;render();
+    respTimer=setInterval(()=>{
+      respContador--;
+      if(respContador<=0){respFase++;if(respFase%4===0)respCiclo++;if(respCiclo>=5){clearInterval(respTimer);respAtivo=false;render();return;}respContador=fases[respFase%4].dur;}
+      render();
+    },1000);
+  });
+  document.getElementById("btn-reset")?.addEventListener("click",()=>{respFase=0;respContador=0;respCiclo=0;respAtivo=false;render();});
+  document.getElementById("btn-ground-next")?.addEventListener("click",()=>{groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";groundStep++;render();});
+  document.getElementById("btn-ground-prev")?.addEventListener("click",()=>{groundRespostas[groundStep]=document.getElementById("ground-input")?.value||"";groundStep--;render();});
+  document.getElementById("btn-ground-done")?.addEventListener("click",()=>{groundRespostas[4]=document.getElementById("ground-input")?.value||"";render();});
+  if(view==="cognitivo") tcRender();
+}
+
+/* ===================== TREINO COGNITIVO ===================== */
+const TC_CORES=[{name:"VERMELHO",hex:"#C0392B"},{name:"AZUL",hex:"#2E5C8A"},{name:"VERDE",hex:"#304E38"},{name:"AMARELO",hex:"#C0A258"},{name:"ROXO",hex:"#6C3F91"}];
+const TC_SIMON_CMDS=["toque o pé direito na bola","toque o pé esquerdo na bola","dê um giro de 360°","bata uma palma","levante o braço direito","pule uma vez","toque a bola com a sola","fique parado por 2 segundos","agache rapidamente","toque o joelho esquerdo","olhe para trás","estique os dois braços"];
+const TC_DRIBLES=["Drible direita","Drible esquerda","Parada","Giro","Elástico","Pedalada","Toque curto","Corte"];
+let tcSub="menu";
+let tcSTimer=null,tcSBarInt=null;
+let tcStTotal=15,tcStIdx=0,tcStHits=0,tcStErrs=0,tcStTimes=[],tcStStart=0,tcStCurColor=null;
+let tcSmTotal=12,tcSmIdx=0,tcSmHits=0,tcSmMisses=0,tcSmDecoy=false,tcSmAnswered=false;
+const TC_SIMON_MS=3500;
+let tcNbLevel=1,tcNbTotal=16,tcNbSeq=[],tcNbIdx=0,tcNbHits=0,tcNbMisses=0;
+
+function tcStop(){clearTimeout(tcSTimer);clearInterval(tcSBarInt);}
+function tcRender(){const el=document.getElementById("tc-inner");if(!el)return;el.innerHTML=tcHtml();tcBind();}
+function tcHtml(){
+  if(tcSub==="menu")          return tcHtmlMenu();
+  if(tcSub==="stroop-start")  return tcHtmlStroopStart();
+  if(tcSub==="stroop-play")   return tcHtmlStroopPlay();
+  if(tcSub==="stroop-result") return tcHtmlStroopResult();
+  if(tcSub==="simon-start")   return tcHtmlSimonStart();
+  if(tcSub==="simon-play")    return tcHtmlSimonPlay();
+  if(tcSub==="simon-result")  return tcHtmlSimonResult();
+  if(tcSub==="nback-start")   return tcHtmlNbackStart();
+  if(tcSub==="nback-play")    return tcHtmlNbackPlay();
+  if(tcSub==="nback-result")  return tcHtmlNbackResult();
+  return "";
+}
+function tcHtmlMenu(){
+  return `<div style="padding:1rem 1rem 0"><div class="tela-header"><p class="sub">Baú de Ferramentas</p><h2>Treino Cognitivo</h2></div></div>
+  <div style="padding:0 1rem"><div class="tc-menu-grid">
+    <div class="tc-menu-card" id="tc-go-stroop"><div class="tc-icon">🎨</div><div class="tc-info"><div class="tc-title">Stroop de Cores</div><div class="tc-desc">Identifique a COR da palavra, ignorando o que ela significa.</div><div class="tc-tags"><span class="tc-tag">Concentração</span><span class="tc-tag">Inibição</span></div></div></div>
+    <div class="tc-menu-card" id="tc-go-simon"><div class="tc-icon">🗣</div><div class="tc-info"><div class="tc-title">Simon Diz com Bola</div><div class="tc-desc">Execute apenas os comandos que começam com "Simon diz".</div><div class="tc-tags"><span class="tc-tag">Foco</span><span class="tc-tag">Tomada de decisão</span></div></div></div>
+    <div class="tc-menu-card" id="tc-go-nback"><div class="tc-icon">⚽</div><div class="tc-info"><div class="tc-title">N-Back de Dribles</div><div class="tc-desc">Lembre o drible que apareceu N posições atrás na sequência.</div><div class="tc-tags"><span class="tc-tag">Memória de trabalho</span><span class="tc-tag">Atenção</span></div></div></div>
+  </div></div>`;
+}
+function tcHtmlStroopStart(){
+  return `<div class="tc-screen tc-active"><div class="tc-start"><h3>🎨 Stroop de Cores</h3><p>Você verá palavras escritas em cores diferentes. Selecione a <strong>cor da tinta</strong> — não o que a palavra diz.</p><div class="tc-config-row"><button class="tc-config-btn ${tcStTotal===10?"tc-sel":""}" id="tc-st-10">10 rodadas</button><button class="tc-config-btn ${tcStTotal===15?"tc-sel":""}" id="tc-st-15">15 rodadas</button><button class="tc-config-btn ${tcStTotal===20?"tc-sel":""}" id="tc-st-20">20 rodadas</button></div><button class="tc-start-btn" id="tc-st-go">Iniciar ▶</button></div></div>`;
+}
+function tcHtmlStroopPlay(){
+  return `<div class="tc-screen tc-active"><div class="tc-play-area"><div class="tc-score" id="tc-st-score">Acertos: ${tcStHits} · Erros: ${tcStErrs} · ${tcStIdx}/${tcStTotal}</div><div class="tc-word" id="tc-st-word"></div><div class="tc-feedback" id="tc-st-fb"></div><div class="tc-opts" id="tc-st-opts"></div></div></div>`;
+}
+function tcHtmlStroopResult(){
+  const acc=tcStTotal>0?Math.round(tcStHits/tcStTotal*100):0;
+  const avgT=tcStTimes.length?Math.round(tcStTimes.reduce((a,b)=>a+b,0)/tcStTimes.length)+"ms":"—";
+  return `<div class="tc-screen tc-active"><div class="tc-result"><div class="tc-res-num">${acc}%</div><div class="tc-res-label">Precisão</div><div class="tc-res-grid"><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--vd)">${tcStHits}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Acertos</div></div><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:#c0392b">${tcStErrs}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Erros</div></div><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--do)">${avgT}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Tempo médio</div></div></div><button class="tc-start-btn" id="tc-st-retry">Jogar novamente</button></div></div>`;
+}
+function tcHtmlSimonStart(){
+  return `<div class="tc-screen tc-active"><div class="tc-start"><h3>🗣 Simon Diz com Bola</h3><p>Execute o comando <strong>apenas se ele começar com "Simon diz"</strong>. Se não começar, fique parado!</p><div class="tc-config-row"><button class="tc-config-btn ${tcSmTotal===8?"tc-sel":""}" id="tc-sm-8">8 rodadas</button><button class="tc-config-btn ${tcSmTotal===12?"tc-sel":""}" id="tc-sm-12">12 rodadas</button><button class="tc-config-btn ${tcSmTotal===16?"tc-sel":""}" id="tc-sm-16">16 rodadas</button></div><button class="tc-start-btn" id="tc-sm-go">Iniciar ▶</button></div></div>`;
+}
+function tcHtmlSimonPlay(){
+  return `<div class="tc-screen tc-active"><div class="tc-play-area" id="tc-sm-area"><div class="tc-score" id="tc-sm-score">Acertos: ${tcSmHits}</div><div class="tc-score" id="tc-sm-counter">${tcSmIdx} / ${tcSmTotal}</div><div class="tc-cmd" id="tc-sm-cmd">Preparando...</div><div class="tc-timerbar-wrap"><div class="tc-timerbar" id="tc-sm-bar"></div></div><div class="tc-action-row"><button class="tc-action-btn" style="background:var(--vd)" id="tc-sm-yes">✔ Executei</button><button class="tc-action-btn" style="background:#c0392b" id="tc-sm-no">✖ Não executei</button></div></div></div>`;
+}
+function tcHtmlSimonResult(){
+  const acc=tcSmTotal>0?Math.round(tcSmHits/tcSmTotal*100):0;
+  return `<div class="tc-screen tc-active"><div class="tc-result"><div class="tc-res-num">${acc}%</div><div class="tc-res-label">Precisão</div><div class="tc-res-grid"><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--vd)">${tcSmHits}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Acertos</div></div><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:#c0392b">${tcSmMisses}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Erros</div></div></div><button class="tc-start-btn" id="tc-sm-retry">Jogar novamente</button></div></div>`;
+}
+function tcHtmlNbackStart(){
+  return `<div class="tc-screen tc-active"><div class="tc-start"><h3>⚽ N-Back de Dribles</h3><p>Você verá dribles em sequência. Quando solicitado, indique qual drible apareceu <strong>${tcNbLevel} posição(ões) atrás</strong>.</p><div class="tc-config-row"><button class="tc-config-btn ${tcNbLevel===1?"tc-sel":""}" id="tc-nb-1">1-Back</button><button class="tc-config-btn ${tcNbLevel===2?"tc-sel":""}" id="tc-nb-2">2-Back</button><button class="tc-config-btn ${tcNbLevel===3?"tc-sel":""}" id="tc-nb-3">3-Back</button></div><button class="tc-start-btn" id="tc-nb-go">Iniciar ▶</button></div></div>`;
+}
+function tcHtmlNbackPlay(){
+  const inWarmup=tcNbIdx<tcNbLevel;
+  const chips=tcNbSeq.slice(0,tcNbIdx+1);
+  return `<div class="tc-screen tc-active"><div class="tc-play-area" id="tc-nb-area"><div class="tc-score">${tcNbIdx+1} / ${tcNbTotal}</div><div class="tc-progbar-wrap"><div class="tc-progbar" style="width:${((tcNbIdx+1)/tcNbTotal)*100}%"></div></div><div class="tc-cue">${tcNbSeq[tcNbIdx]||""}</div><div class="tc-chips">${chips.map((c,i)=>`<span class="tc-chip ${i===tcNbIdx?"tc-cur":""}">${c}</span>`).join("")}</div>${inWarmup?`<div class="tc-prompt">Memorize...</div>`:`<div class="tc-prompt">Qual foi o drible ${tcNbLevel} posição(ões) atrás?</div><div class="tc-nb-opts" id="tc-nb-opts"></div>`}</div></div>`;
+}
+function tcHtmlNbackResult(){
+  const total=tcNbTotal-tcNbLevel;
+  const acc=total>0?Math.round(tcNbHits/total*100):0;
+  return `<div class="tc-screen tc-active"><div class="tc-result"><div class="tc-res-num">${acc}%</div><div class="tc-res-label">Precisão · ${tcNbLevel}-Back</div><div class="tc-res-grid"><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--vd)">${tcNbHits}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Acertos</div></div><div style="text-align:center"><div style="font-size:28px;font-weight:900;color:#c0392b">${tcNbMisses}</div><div style="font-size:11px;color:var(--sg);text-transform:uppercase">Erros</div></div></div><button class="tc-start-btn" id="tc-nb-retry">Jogar novamente</button></div></div>`;
+}
+
+function tcBind(){
+  document.getElementById("tc-go-stroop")?.addEventListener("click",()=>{tcSub="stroop-start";tcRender();});
+  document.getElementById("tc-go-simon")?.addEventListener("click",()=>{tcSub="simon-start";tcRender();});
+  document.getElementById("tc-go-nback")?.addEventListener("click",()=>{tcSub="nback-start";tcRender();});
+  document.getElementById("tc-st-10")?.addEventListener("click",()=>{tcStTotal=10;tcRender();});
+  document.getElementById("tc-st-15")?.addEventListener("click",()=>{tcStTotal=15;tcRender();});
+  document.getElementById("tc-st-20")?.addEventListener("click",()=>{tcStTotal=20;tcRender();});
+  document.getElementById("tc-st-go")?.addEventListener("click",()=>{tcStIdx=0;tcStHits=0;tcStErrs=0;tcStTimes=[];tcSub="stroop-play";tcRender();setTimeout(tcStroopNext,50);});
+  document.getElementById("tc-st-retry")?.addEventListener("click",()=>{tcSub="stroop-start";tcRender();});
+  document.getElementById("tc-sm-8")?.addEventListener("click",()=>{tcSmTotal=8;tcRender();});
+  document.getElementById("tc-sm-12")?.addEventListener("click",()=>{tcSmTotal=12;tcRender();});
+  document.getElementById("tc-sm-16")?.addEventListener("click",()=>{tcSmTotal=16;tcRender();});
+  document.getElementById("tc-sm-go")?.addEventListener("click",()=>{tcSmIdx=0;tcSmHits=0;tcSmMisses=0;tcSub="simon-play";tcRender();setTimeout(tcSimonNext,300);});
+  document.getElementById("tc-sm-yes")?.addEventListener("click",()=>tcSimonAnswer(true));
+  document.getElementById("tc-sm-no")?.addEventListener("click",()=>tcSimonAnswer(false));
+  document.getElementById("tc-sm-retry")?.addEventListener("click",()=>{tcSub="simon-start";tcRender();});
+  document.getElementById("tc-nb-1")?.addEventListener("click",()=>{tcNbLevel=1;tcRender();});
+  document.getElementById("tc-nb-2")?.addEventListener("click",()=>{tcNbLevel=2;tcRender();});
+  document.getElementById("tc-nb-3")?.addEventListener("click",()=>{tcNbLevel=3;tcRender();});
+  document.getElementById("tc-nb-go")?.addEventListener("click",()=>{
+    tcNbIdx=0;tcNbHits=0;tcNbMisses=0;
+    tcNbSeq=Array.from({length:tcNbTotal},()=>TC_DRIBLES[Math.floor(Math.random()*TC_DRIBLES.length)]);
+    tcSub="nback-play";tcRender();setTimeout(()=>tcNbackPopOpts(),50);
+  });
+  document.getElementById("tc-nb-retry")?.addEventListener("click",()=>{tcSub="nback-start";tcRender();});
+}
+
+function tcStroopNext(){
+  if(tcStIdx>=tcStTotal){tcSub="stroop-result";tcRender();return;}
+  tcStCurColor=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];
+  const word=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];
+  const color=tcStCurColor;
+  tcStIdx++;
+  const wEl=document.getElementById("tc-st-word");
+  wEl.textContent=word.name;wEl.style.color=color.hex;
+  let opts=[color];
+  while(opts.length<4){const c=TC_CORES[Math.floor(Math.random()*TC_CORES.length)];if(!opts.find(o=>o.name===c.name))opts.push(c);}
+  opts.sort(()=>Math.random()-.5);
+  const wrap=document.getElementById("tc-st-opts");wrap.innerHTML="";
+  opts.forEach(opt=>{const b=document.createElement("button");b.className="tc-opt-btn";b.style.background=opt.hex;b.textContent=opt.name;b.addEventListener("click",()=>tcStroopAnswer(opt.name===color.name));wrap.appendChild(b);});
+  tcStStart=performance.now();
+}
+function tcStroopAnswer(correct){
+  tcStTimes.push(performance.now()-tcStStart);
+  const fb=document.getElementById("tc-st-fb");
+  if(correct){tcStHits++;fb.textContent="Certo!";fb.className="tc-feedback tc-fb-ok";}
+  else{tcStErrs++;fb.textContent="Era "+tcStCurColor.name;fb.className="tc-feedback tc-fb-err";}
+  setTimeout(tcStroopNext,350);
+}
+function tcSimonNext(){
+  tcStop();
+  if(tcSmIdx>=tcSmTotal){tcSub="simon-result";tcRender();return;}
+  tcSmIdx++;tcSmAnswered=false;
+  document.getElementById("tc-sm-counter").textContent=`${tcSmIdx} / ${tcSmTotal}`;
+  const cmd=TC_SIMON_CMDS[Math.floor(Math.random()*TC_SIMON_CMDS.length)];
+  tcSmDecoy=Math.random()<0.35;
+  const cmdEl=document.getElementById("tc-sm-cmd");
+  cmdEl.textContent=tcSmDecoy?cmd.charAt(0).toUpperCase()+cmd.slice(1):"Simon diz: "+cmd;
+  cmdEl.className="tc-cmd"+(tcSmDecoy?" tc-decoy":"");
+  const bar=document.getElementById("tc-sm-bar");
+  bar.style.transition="none";bar.style.width="100%";void bar.offsetWidth;
+  bar.style.transition=`width ${TC_SIMON_MS}ms linear`;bar.style.width="0%";
+  tcSTimer=setTimeout(()=>{if(!tcSmAnswered) tcSimonRegister(tcSmDecoy);},TC_SIMON_MS);
+}
+function tcSimonAnswer(executed){
+  if(tcSmAnswered)return;tcSmAnswered=true;tcStop();
+  tcSimonRegister((executed&&!tcSmDecoy)||(!executed&&tcSmDecoy));
+}
+function tcSimonRegister(correct){
+  if(correct)tcSmHits++;else tcSmMisses++;
+  document.getElementById("tc-sm-score").textContent=`Acertos: ${tcSmHits}`;
+  const area=document.getElementById("tc-sm-area");
+  area.classList.add(correct?"tc-flash-ok":"tc-flash-err");
+  setTimeout(()=>area.classList.remove("tc-flash-ok","tc-flash-err"),400);
+  setTimeout(tcSimonNext,500);
+}
+function tcNbackPopOpts(){
+  if(tcSub!=="nback-play")return;
+  const inWarmup=tcNbIdx<tcNbLevel;
+  if(inWarmup){setTimeout(()=>{tcNbIdx++;tcRender();tcNbackPopOpts();},1600);return;}
+  const correctAns=tcNbSeq[tcNbIdx-tcNbLevel];
+  let opts=[correctAns];
+  while(opts.length<4){const m=TC_DRIBLES[Math.floor(Math.random()*TC_DRIBLES.length)];if(!opts.includes(m))opts.push(m);}
+  opts.sort(()=>Math.random()-.5);
+  const wrap=document.getElementById("tc-nb-opts");if(!wrap)return;
+  wrap.innerHTML="";
+  opts.forEach(opt=>{
+    const b=document.createElement("button");b.className="tc-nb-opt";b.textContent=opt;
+    b.addEventListener("click",()=>{
+      const correct=opt===correctAns;
+      if(correct)tcNbHits++;else tcNbMisses++;
+      const area=document.getElementById("tc-nb-area");
+      area.classList.add(correct?"tc-flash-ok":"tc-flash-err");
+      setTimeout(()=>{area.classList.remove("tc-flash-ok","tc-flash-err");tcNbIdx++;if(tcNbIdx>=tcNbTotal){tcSub="nback-result";tcRender();}else{tcRender();tcNbackPopOpts();}},400);
+    });
+    wrap.appendChild(b);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
