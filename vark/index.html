@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Resultado — Questionário VARK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --creme:#F8F4EC;
+    --creme-escuro:#EEE8DA;
+    --verde-escuro:#304E38;
+    --verde-sage:#8CA591;
+    --dourado:#C0A258;
+    --texto:#2A2A26;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--creme-escuro);
+    color:var(--texto);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    background:linear-gradient(120deg,var(--verde-escuro) 0%,#3d6249 60%,var(--dourado) 130%);
+    padding:22px 24px;
+  }
+  .topbar__inner{
+    max-width:840px;
+    margin:0 auto;
+  }
+  .topbar__eyebrow{
+    color:var(--dourado);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .topbar__title{
+    color:var(--creme);
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:26px;
+    margin:4px 0 0;
+  }
+
+  .wrap{
+    max-width:840px;
+    margin:0 auto;
+    padding:32px 24px 80px;
+  }
+
+  /* ---------- input panel ---------- */
+  .panel{
+    background:var(--creme);
+    border-left:4px solid var(--dourado);
+    border-radius:2px;
+    padding:28px 28px 24px;
+    margin-bottom:36px;
+  }
+  .panel__label{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--verde-sage);
+    margin-bottom:14px;
+  }
+  .field-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 20px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .field--full{grid-column:1 / -1;}
+  .field label{
+    font-size:12px;
+    font-weight:600;
+    color:var(--verde-escuro);
+  }
+  .field input, .field select{
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    padding:9px 11px;
+    border:1px solid var(--verde-sage);
+    border-radius:3px;
+    background:#fff;
+    color:var(--texto);
+  }
+  .field input:focus, .field select:focus{
+    outline:2px solid var(--dourado);
+    outline-offset:1px;
+  }
+  .scores-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:6px;
+  }
+  .scores-row .field label{font-size:11px;}
+  .hint{
+    font-size:12px;
+    color:#6b6b63;
+    margin-top:12px;
+    line-height:1.5;
+  }
+
+  /* ---------- ficha ---------- */
+  .ficha{
+    background:#fff;
+    border-left:4px solid var(--verde-escuro);
+    border-radius:2px;
+    padding:36px 36px 30px;
+  }
+  .ficha__header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .ficha__title{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:24px;
+    color:var(--verde-escuro);
+    margin:0;
+  }
+  .ficha__subtitle{
+    font-size:13px;
+    color:var(--verde-sage);
+    font-weight:600;
+    letter-spacing:.04em;
+    margin-top:4px;
+  }
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg,var(--dourado),transparent 85%);
+    margin:18px 0 22px;
+  }
+  .info-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px 20px;
+    margin-bottom:8px;
+  }
+  .info-grid dt{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--verde-sage);
+    margin:0 0 3px;
+  }
+  .info-grid dd{
+    margin:0;
+    font-size:14px;
+    color:var(--texto);
+    font-weight:500;
+  }
+
+  .chart-section{margin-top:28px;}
+  .chart-title{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--verde-sage);
+    margin-bottom:14px;
+  }
+  .bars{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    align-items:end;
+    height:180px;
+    padding:0 4px;
+  }
+  .bar-col{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    height:100%;
+  }
+  .bar-track{
+    width:100%;
+    height:140px;
+    display:flex;
+    align-items:flex-end;
+    background:var(--creme-escuro);
+    border-radius:2px 2px 0 0;
+    overflow:hidden;
+  }
+  .bar-fill{
+    width:100%;
+    height:0%;
+    transition:height .7s cubic-bezier(.4,0,.2,1);
+  }
+  .bar-score{
+    font-size:13px;
+    font-weight:700;
+    color:var(--verde-escuro);
+    margin-top:8px;
+  }
+  .bar-pct{
+    font-size:11px;
+    color:#8a8a80;
+  }
+  .bar-label{
+    font-size:11px;
+    font-weight:600;
+    color:var(--texto);
+    margin-top:6px;
+    text-align:center;
+    line-height:1.3;
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bar-fill{transition:none;}
+  }
+
+  .classification{
+    margin-top:30px;
+    background:var(--verde-escuro);
+    color:var(--creme);
+    border-radius:2px;
+    padding:18px 22px;
+  }
+  .classification__label{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--dourado);
+    margin-bottom:6px;
+  }
+  .classification__value{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:19px;
+  }
+
+  .rec-section{margin-top:28px;}
+  .rec-block{margin-bottom:22px;}
+  .rec-block__title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--verde-escuro);
+    margin-bottom:6px;
+  }
+  .rec-block__def{
+    font-size:13px;
+    line-height:1.6;
+    color:var(--texto);
+    margin:0 0 4px;
+  }
+  .rec-block__cite{
+    color:var(--verde-sage);
+    font-size:12px;
+    font-style:italic;
+  }
+  .rec-block__subtitle{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--dourado);
+    margin:12px 0 6px;
+  }
+  .rec-block ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .rec-block li{
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--texto);
+    margin-bottom:2px;
+  }
+
+  .refs-section{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--creme-escuro);
+  }
+  .refs-title{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--verde-sage);
+    margin-bottom:8px;
+  }
+  .refs-list{
+    margin:0;
+    padding-left:16px;
+  }
+  .refs-list li{
+    font-size:11px;
+    line-height:1.6;
+    color:#6b6b63;
+    margin-bottom:5px;
+  }
+
+  .ficha__footer{
+    margin-top:30px;
+    padding-top:14px;
+    border-top:1px solid var(--creme-escuro);
+    font-size:11px;
+    color:#9a9a90;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  .empty-state{
+    text-align:center;
+    padding:40px 20px;
+    color:#9a9a90;
+    font-size:14px;
+  }
+
+  .actions{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:18px;
+  }
+  .btn{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.02em;
+    background:var(--verde-escuro);
+    color:var(--creme);
+    border:none;
+    border-radius:3px;
+    padding:11px 22px;
+    cursor:pointer;
+  }
+  .btn:hover{background:#25392c;}
+  .btn:focus-visible{outline:2px solid var(--dourado); outline-offset:2px;}
+
+  @media (max-width:640px){
+    .field-grid, .scores-row, .info-grid{grid-template-columns:1fr 1fr;}
+    .bars{gap:10px;}
+    .ficha{padding:26px 20px 22px;}
+  }
+
+  @media print{
+    body{background:#fff;}
+    .topbar, .panel, .actions{display:none !important;}
+    .wrap{padding:0; max-width:none;}
+    .ficha{border-left:4px solid var(--verde-escuro); padding:0 8px;}
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar__inner">
+    <div class="topbar__eyebrow">Psicologia do Esporte</div>
+    <h1 class="topbar__title">Ficha de Resultado — VARK</h1>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="panel">
+    <div class="panel__label">Dados da avaliação</div>
+    <div class="field-grid">
+      <div class="field">
+        <label for="nome">Atleta</label>
+        <input type="text" id="nome" placeholder="Nome completo">
+      </div>
+      <div class="field">
+        <label for="categoria">Categoria</label>
+        <select id="categoria">
+          <option value="">Selecionar</option>
+          <option>Sub-15</option>
+          <option>Sub-17</option>
+          <option>Sub-20</option>
+        </select>
+      </div>
+      <div class="field field--full">
+        <label for="data">Data da aplicação</label>
+        <input type="date" id="data">
+      </div>
+    </div>
+
+    <div class="panel__label" style="margin-top:22px;">Escores obtidos (site oficial VARK)</div>
+    <div class="scores-row">
+      <div class="field">
+        <label for="v">Visual</label>
+        <input type="number" id="v" min="0" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="a">Auditivo</label>
+        <input type="number" id="a" min="0" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="r">Leitura/Escrita</label>
+        <input type="number" id="r" min="0" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="k">Cinestésico</label>
+        <input type="number" id="k" min="0" inputmode="numeric">
+      </div>
+    </div>
+    <div class="hint">Aplique o questionário no site oficial do VARK e insira aqui os quatro escores brutos exibidos ao final. A ficha abaixo é atualizada automaticamente.</div>
+  </section>
+
+  <section class="ficha" id="ficha">
+    <div id="fichaEmpty" class="empty-state">Insira os escores acima para gerar a ficha.</div>
+
+    <div id="fichaContent" style="display:none;">
+      <div class="ficha__header">
+        <div>
+          <p class="ficha__title" id="outNome">Ficha de Resultado</p>
+          <div class="ficha__subtitle">Questionário VARK</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <dl class="info-grid">
+        <div><dt>Atleta</dt><dd id="infoNome">—</dd></div>
+        <div><dt>Categoria</dt><dd id="infoCategoria">—</dd></div>
+        <div><dt>Data</dt><dd id="infoData">—</dd></div>
+        <div><dt>Instrumento</dt><dd>VARK (v. 8.01)</dd></div>
+      </dl>
+
+      <div class="chart-section">
+        <div class="chart-title">Perfil de aprendizagem</div>
+        <div class="bars">
+          <div class="bar-col">
+            <div class="bar-track"><div class="bar-fill" id="barV" style="background:var(--dourado);"></div></div>
+            <div class="bar-score" id="scoreV">0</div>
+            <div class="bar-pct" id="pctV">0%</div>
+            <div class="bar-label">Visual</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-track"><div class="bar-fill" id="barA" style="background:var(--verde-sage);"></div></div>
+            <div class="bar-score" id="scoreA">0</div>
+            <div class="bar-pct" id="pctA">0%</div>
+            <div class="bar-label">Auditivo</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-track"><div class="bar-fill" id="barR" style="background:var(--verde-escuro);"></div></div>
+            <div class="bar-score" id="scoreR">0</div>
+            <div class="bar-pct" id="pctR">0%</div>
+            <div class="bar-label">Leitura /<br>Escrita</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar-track"><div class="bar-fill" id="barK" style="background:#8a7048;"></div></div>
+            <div class="bar-score" id="scoreK">0</div>
+            <div class="bar-pct" id="pctK">0%</div>
+            <div class="bar-label">Cinestésico</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="classification">
+        <div class="classification__label">Leitura sugerida</div>
+        <div class="classification__value" id="classValue">—</div>
+      </div>
+
+      <div class="rec-section" id="recSection"></div>
+
+      <div class="refs-section">
+        <div class="refs-title">Referências</div>
+        <ol class="refs-list">
+          <li>Fleming, N. D.; Mills, C. Not another inventory, rather a catalyst for reflection. <em>To Improve the Academy</em>, v. 11, n. 1, p. 137–155, 1992.</li>
+          <li>Braakhuis, A.; Williams, T.; Fusco, E.; Hueglin, S.; Popple, A. A comparison between learning style preferences, gender, sport and achievement in elite team sport athletes. <em>Sports</em>, v. 3, n. 4, p. 325–334, 2015.</li>
+          <li>VARK Learn Limited. VARK® Modalities: what do Visual, Aural, Read/write &amp; Kinesthetic really mean? Christchurch: VARK-Learn, 2026. Disponível em: vark-learn.com/about-vark/the-vark-modalities.</li>
+          <li>VARK Learn Limited. Enhancing athletic performance with VARK®. Christchurch: VARK-Learn, 2026. Disponível em: vark-learn.com/for-teachers-and-trainers/vark-in-sport.</li>
+        </ol>
+      </div>
+
+      <div class="ficha__footer">
+        <span>Psicologia do Esporte</span>
+        <span>Documento de uso técnico interno</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="actions">
+    <button class="btn" onclick="window.print()">Exportar ficha (PDF)</button>
+  </div>
+
+</div>
+
+<script>
+  const ids = ['nome','categoria','data','v','a','r','k'];
+  const inputs = {};
+  ids.forEach(id => inputs[id] = document.getElementById(id));
+
+  const RECS = {
+    V: {
+      titulo: 'Visual',
+      definicao: 'Preferência por informação apresentada de forma gráfica — mapas, diagramas, gráficos e esquemas que organizam visualmente a relação entre elementos. No modelo original, não inclui fotos, vídeos ou demonstrações da realidade; o que caracteriza esse perfil é a representação simbólica e espacial da informação.',
+      citacaoDef: 'Fleming &amp; Mills, 1992',
+      dicas: [
+        'Diagramas táticos e esquemas que mostram como os movimentos se conectam',
+        'Observação de padrões de jogo e demonstrações visuais antes da execução',
+        'Análise de imagem e replay para correção técnica'
+      ]
+    },
+    A: {
+      titulo: 'Auditivo',
+      definicao: 'Preferência por informação recebida ou transmitida pela fala — explicações verbais, discussões em grupo e conversas. Esse perfil tende a processar melhor uma ideia falando sobre ela, podendo repetir o que já foi dito como parte do próprio raciocínio.',
+      citacaoDef: 'Fleming &amp; Mills, 1992',
+      dicas: [
+        'Explicação verbal da tática antes e depois do treino',
+        'Discussão em grupo sobre o desempenho e o raciocínio tático',
+        'Feedback falado, com espaço para o atleta verbalizar o próprio entendimento'
+      ]
+    },
+    R: {
+      titulo: 'Leitura/Escrita',
+      definicao: 'Preferência por informação apresentada em forma de texto — leitura e escrita em suas diversas formas, como listas, anotações, manuais e relatórios. Esse perfil tende a se beneficiar de material escrito estruturado e de organizar o próprio raciocínio por meio da escrita.',
+      citacaoDef: 'Fleming &amp; Mills, 1992',
+      dicas: [
+        'Roteiros escritos com o passo a passo de jogadas e rotinas',
+        'Anotações e listas próprias sobre o treino',
+        'Relatórios de desempenho disponíveis por escrito'
+      ]
+    },
+    K: {
+      titulo: 'Cinestésico',
+      definicao: 'Preferência por aprender pela experiência concreta — prática, simulação, repetição e conexão com situações reais, valorizando a própria vivência mais do que a explicação teórica. É, segundo estudos com atletas, o perfil mais frequente nessa população.',
+      citacaoDef: 'Fleming &amp; Mills, 1992; Braakhuis et al., 2015',
+      dicas: [
+        'Aprendizagem pela prática, com tentativa e erro guiados',
+        'Simulações em ritmo de jogo e repetição física',
+        'Conexão direta entre a instrução e a situação real de jogo'
+      ]
+    }
+  };
+
+  function classify(scores){
+    const entries = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+    const top = entries[0][1];
+    const THRESHOLD = 3;
+    const close = entries.filter(([,v]) => (top - v) <= THRESHOLD);
+    let tipo;
+    if (close.length === 1) tipo = 'Unimodal';
+    else if (close.length === 2) tipo = 'Bimodal';
+    else if (close.length === 3) tipo = 'Trimodal';
+    else tipo = 'Quadrimodal';
+    return { tipo, modalidades: close.map(([k]) => k) };
+  }
+
+  function render(){
+    const nome = inputs.nome.value.trim();
+    const categoria = inputs.categoria.value;
+    const data = inputs.data.value;
+    const scores = {
+      V: Number(inputs.v.value) || 0,
+      A: Number(inputs.a.value) || 0,
+      R: Number(inputs.r.value) || 0,
+      K: Number(inputs.k.value) || 0
+    };
+    const total = scores.V + scores.A + scores.R + scores.K;
+
+    const empty = document.getElementById('fichaEmpty');
+    const content = document.getElementById('fichaContent');
+
+    if (total === 0) {
+      empty.style.display = 'block';
+      content.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    content.style.display = 'block';
+
+    document.getElementById('outNome').textContent = nome ? nome : 'Ficha de Resultado';
+    document.getElementById('infoNome').textContent = nome || '—';
+    document.getElementById('infoCategoria').textContent = categoria || '—';
+    document.getElementById('infoData').textContent = data
+      ? new Date(data + 'T00:00:00').toLocaleDateString('pt-BR')
+      : '—';
+
+    const max = Math.max(scores.V, scores.A, scores.R, scores.K, 1);
+    ['V','A','R','K'].forEach(k => {
+      const pct = total ? Math.round((scores[k] / total) * 100) : 0;
+      const heightPct = Math.round((scores[k] / max) * 100);
+      document.getElementById('bar' + k).style.height = heightPct + '%';
+      document.getElementById('score' + k).textContent = scores[k];
+      document.getElementById('pct' + k).textContent = pct + '%';
+    });
+
+    const result = classify(scores);
+    const nomesModal = { V:'Visual', A:'Auditivo', R:'Leitura/Escrita', K:'Cinestésico' };
+    const label = result.modalidades.map(m => nomesModal[m]).join(' / ');
+    document.getElementById('classValue').textContent =
+      result.tipo === 'Unimodal' ? `Unimodal — ${label}` : `${result.tipo} — ${label}`;
+
+    const recSection = document.getElementById('recSection');
+    recSection.innerHTML = '';
+    result.modalidades.forEach(m => {
+      const block = document.createElement('div');
+      block.className = 'rec-block';
+      const title = document.createElement('div');
+      title.className = 'rec-block__title';
+      title.textContent = RECS[m].titulo;
+      const def = document.createElement('p');
+      def.className = 'rec-block__def';
+      def.innerHTML = RECS[m].definicao + ' <span class="rec-block__cite">(' + RECS[m].citacaoDef + ')</span>';
+      const appTitle = document.createElement('div');
+      appTitle.className = 'rec-block__subtitle';
+      appTitle.textContent = 'Aplicação no treino';
+      const ul = document.createElement('ul');
+      RECS[m].dicas.forEach(d => {
+        const li = document.createElement('li');
+        li.textContent = d;
+        ul.appendChild(li);
+      });
+      block.appendChild(title);
+      block.appendChild(def);
+      block.appendChild(appTitle);
+      block.appendChild(ul);
+      recSection.appendChild(block);
+    });
+  }
+
+  ids.forEach(id => inputs[id].addEventListener('input', render));
+  inputs.categoria.addEventListener('change', render);
+
+  // default date = today
+  inputs.data.valueAsDate = new Date();
+  render();
+</script>
+
+</body>
+</html>
